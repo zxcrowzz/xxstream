@@ -1,0 +1,105 @@
+<h1>Enter Shipping Address</h1>
+<link rel="stylesheet" href="em.css">
+<img alt="No image supported" id = "empireimg" src="/DALL·E 2024-11-25 01.08.22 - A minimalistic orange and yellow crown logo with simple geometric shapes. The design features smooth gradients and a sleek, modern style. The crown co.webp">
+<h3 id = "Express2">Express</h3>
+<h3 id = "Market2">Market</h3>
+
+
+<div id = "user">
+<img alt="noimg" id = "userimg" src="https://icones.pro/wp-content/uploads/2021/02/icone-utilisateur-orange.png">
+Logged in as<p>Current Balance</p> 
+
+
+<button id = "Logoutbtn">
+
+    Logout
+</button>
+
+</div>
+
+
+<div id = "navbar">
+ 
+<button id = "btn1" class = "class2">
+
+HOME
+
+</button>
+
+
+
+<button id = "btn2" class = "class2">
+
+    SALES
+    
+</button>
+
+<button id = "btn3" class = "class2">
+
+    MESSAGES
+    
+</button>
+
+<button id = "btn8" class = "class2">
+
+  LIST A PRODCUT
+  
+</button>
+<form action="/orders" method="post">
+<button type="submit" id = "btn4" class = "class2">
+
+    ORDERS
+    
+</button>
+</form>
+<button id = "btn5" class = "class2">
+
+    BECOME A VENDOR
+    
+</button>
+
+<button id = "btn6" class = "class2">
+
+    BALANCE
+    
+</button>
+
+<button id = "btn7" class = "class2">
+
+    FEEDBACK
+    
+</button>
+
+
+
+
+
+<button id = "btn9" class = "class2">
+
+    SUPPORT
+</button>
+
+</div>
+<form action="/order/create" method="POST">
+    <input type="hidden" name="productId" value="<%= productId %>">  <!-- Hidden productId from the URL -->
+
+    <div>
+        <label for="address">Shipping Address:</label>
+        <textarea name="address" id="address" required></textarea>
+    </div>
+
+    <div>
+        <label for="payerName">Name:</label>
+        <input type="text" name="payerName" id="payerName" required>
+    </div>
+
+    <div>
+        <label for="payerEmail">Email:</label>
+        <input type="email" name="payerEmail" id="payerEmail" required>
+    </div>
+
+    <button type="submit">Place Order</button>
+
+
+
+</form>

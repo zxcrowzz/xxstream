@@ -162,4 +162,34 @@
     </div>
   </div>
 </body>
+
+
+
+<!-- Add PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=AU0cVDF6YEaTIHqGnL819YVXDyJ1msfskbiRl8CzKC-PgzvzGiLoB6hOwQPfQzOlUsCpqlJ6f-q4F1Rz&components=buttons"></script>
+
+<script>
+  // Render the PayPal Button
+  paypal.Buttons({
+    createOrder: function(data, actions) {
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: '85.00'  // Set the price here dynamically if needed
+          }
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      return actions.order.capture().then(function(details) {
+        alert('Payment Successful! Thank you, ' + details.payer.name.given_name);
+        // You can send payment confirmation to your server if needed
+      });
+    },
+    onError: function(err) {
+      console.error('Error: ', err);
+    }
+  }).render('.buy-now'); // This is the button's target container
+</script>
+
 </html>

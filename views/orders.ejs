@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders</title>
+  <style>
+    /* Your styles go here */
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+      color: #2c3e50;
+    }
+
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    thead {
+      background-color: #ffae00;
+      color: #fff;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    td {
+      font-size: 14px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    td, th {
+      border-right: 1px solid #ddd;
+    }
+
+    td:last-child, th:last-child {
+      border-right: none;
+    }
+
+    table td {
+      word-wrap: break-word;
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Styling for better responsiveness */
+    @media (max-width: 768px) {
+      table {
+        width: 100%;
+      }
+
+      th, td {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <link rel="stylesheet" href="em.css">
+  <img alt="No image supported" id="empireimg" src="/DALL·E 2024-11-25 01.08.22 - A minimalistic orange and yellow crown logo with simple geometric shapes. The design features smooth gradients and a sleek, modern style. The crown co.webp">
+  <h3 id="Express2">Express</h3>
+  <h3 id="Market2">Market</h3>
+
+  <div id="user">
+    <img alt="noimg" id="userimg" src="https://icones.pro/wp-content/uploads/2021/02/icone-utilisateur-orange.png">
+    Logged in as<p>Current Balance</p> 
+
+    <button id="Logoutbtn">
+      Logout
+    </button>
+  </div>
+
+  <div id="navbar">
+    <button id="btn1" class="class2">HOME</button>
+    <button id="btn2" class="class2">SALES</button>
+    <button id="btn3" class="class2">MESSAGES</button>
+    <button id="btn8" class="class2">LIST A PRODUCT</button>
+    <button id="btn4" class="class2">ORDERS</button>
+    <button id="btn5" class="class2">BECOME A VENDOR</button>
+    <button id="btn6" class="class2">BALANCE</button>
+    <button id="btn7" class="class2">FEEDBACK</button>
+    <button id="btn9" class="class2">SUPPORT</button>
+  </div>
+
+  <h1>Your Orders</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Total Price</th>
+        <th>Payer Name</th>
+        <th>Payer Email</th>
+        <th>Order Date</th>
+        <th>Shipping Address</th> <!-- Added this column for the shipping address -->
+      </tr>
+    </thead>
+    <tbody>
+      <% orders.forEach(order => { %>
+        <tr>
+          <td><%= order.orderId %></td>
+          <td><%= order.productName %></td>
+          <td><%= order.quantity %></td>
+          <td>$<%= order.price * order.quantity %></td> <!-- Assuming price is stored in the order -->
+          <td><%= order.payerName %></td>
+          <td><%= order.payerEmail %></td>
+          <td>
+            <% if (order.orderDate) { %>
+              <%= order.orderDate.toISOString().slice(0, 10) %>
+            <% } else { %>
+              N/A
+            <% } %>
+          </td>
+          <td><%= order.shippingAddress || "Address not available" %></td> <!-- Display the address -->
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</body>
+</html>
