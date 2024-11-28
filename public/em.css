@@ -1,0 +1,3065 @@
+#body {
+
+
+    background-color:whitesmoke;
+}
+
+
+#navbar {
+
+
+    background-color: #3b3b3b;
+
+    height: 70px;
+
+    border-radius: 5px;
+}
+
+
+.class2 {
+
+    position: relative;
+    background-color: #3b3b3b;
+
+
+    color: white;
+
+    opacity: .75;
+
+    border: none;
+
+    left: 20px;
+
+
+    font-size: 15px;
+
+    top: 18px;
+}
+#user {
+
+
+
+    position: absolute;
+
+
+
+    right: 120px;
+
+    top: 0px;
+
+    
+}
+
+#userimg {
+
+        position: absolute;
+
+    width: 60px;
+
+    height: 60px;
+
+    left: -65px;
+
+    
+}
+
+#divContainer {
+
+   
+    position: absolute;
+
+    width: 60%;
+
+    height: 70%;
+
+    background-color:white;
+
+
+    border: .01pc solid lightgray;
+
+
+    left: 20%;
+
+    top: 20%;
+border-radius: 6px;
+
+
+
+    
+
+}
+
+#empireimg1 {
+position: absolute;
+
+
+left: 19.5%;
+
+top: 10%;
+
+
+}
+#navbar1 {
+    position: absolute;
+
+    background-color: #3b3b3b;
+    width: 100%;
+
+
+    height: 8.5%;
+
+    border-radius: 5px;
+
+    
+}
+
+.class3 {
+
+    position: relative;
+    background-color: #3b3b3b;
+
+
+    color: white;
+
+    opacity: .75;
+
+    border: none;
+
+    left: 20px;
+
+
+    font-size: 15px;
+
+    top: 18px;
+}
+
+
+#currentNav {
+
+    position: absolute;
+
+    border-radius: 5px;
+
+
+    width: 95%;
+
+    height: 6.5%;
+
+
+    border: 1px solid lightgray;
+
+    top: 12%;
+
+
+    left: 25px;
+
+    
+}
+
+#loginContainer {
+
+border-radius: 5px;
+
+border: 1px solid lightgray;
+
+
+
+
+
+}
+#loginContainer {
+    position: absolute;
+    border-radius: 5px;
+
+border: 1px solid lightgray;
+
+
+height: 70%;
+
+
+width: 88%;
+
+top: 22%;
+
+left: 6%;
+}
+#h33 {
+
+    position: absolute;
+
+    top: 10%;
+    font-size: 15px;
+
+    left: 1%;
+
+    color: gray;
+
+    
+}
+
+#p33 {
+    
+    position: absolute;
+
+    top: 10%;
+    font-size: 15px;
+    color: gray;
+
+    
+}
+
+#loginHeader {
+    
+    position: absolute;
+    top: 2.5%;
+    background-color: whitesmoke;
+    width: 97%;
+    color: black;
+
+    border-radius: 5px;
+    
+    font-family: 'Courier New', Courier, monospace;
+    border: 1px solid lightgray;
+    
+    left: 1%;
+    height: 8%;
+
+    font-weight: bold;
+
+    text-align: left;
+
+    padding: 1px;
+}
+
+#buttonRegister {
+
+
+    color: orange;
+
+    background-color: white;
+
+    border: none;
+
+
+
+}
+
+#lostPasswordButton {
+    color: orange;
+
+    background-color: white;
+
+    border: none;
+
+
+}
+
+#inputUser {
+
+
+
+    width: 15%;
+
+
+    position: absolute;
+
+
+    top: 28%;
+    left: 24.5%;
+    width: 45%;
+
+    height: 30px;
+
+    border-radius: 5px;
+
+    border: 1px solid lightgray;
+}
+
+#inputPassword {
+
+
+
+    width: 15%;
+
+
+    position: absolute;
+
+
+    top: 40%;
+    left: 24.5%;
+    width: 45%;
+
+    height: 30px;
+
+    border-radius: 5px;
+
+    border: 1px solid lightgray;
+}
+
+#capcha {
+
+    position: absolute;;
+    width: 25%;
+
+    height: 27%;
+
+    border-radius: 5px;
+
+    top: 50%;
+
+    left: 35%;
+    border: 1px solid lightgray;
+}
+
+#inputCaptcha {
+
+    width: 15%;
+
+
+    position: absolute;
+
+
+    top: 80%;
+    left: 24.5%;
+    width: 45%;
+
+    height: 30px;
+
+    border-radius: 5px;
+
+}
+
+#loginButton {
+
+
+    position: absolute;
+
+
+    background-color: darkorange;
+
+
+    color: white;
+
+
+    top: 90%;
+
+
+    width: 70px;
+
+    height: 35px;
+
+    left: 44%;
+
+    border-radius: 5px;
+
+
+    border: none;
+
+
+}
+
+#h33z {
+
+
+    position: absolute;
+
+    top: 10%;
+    font-size: 15px;
+
+    left: 1%;
+
+    color: gray;
+}
+
+
+#divContainerz {
+
+    position: absolute;
+
+    width: 60%;
+
+    height: 85%;
+
+    background-color:white;
+
+
+    border: .01pc solid lightgray;
+
+
+    left: 20%;
+
+    top: 10%;
+border-radius: 6px;
+
+}
+
+#empireimg2 {
+
+
+    position: absolute;
+
+    top: 0;
+
+    left: 20%;
+}
+
+#loginContainerz {
+
+
+    position: absolute;
+    border-radius: 5px;
+
+border: 1px solid lightgray;
+
+
+height: 75%;
+
+
+width: 88%;
+
+top: 20%;
+
+left: 6%;
+}
+
+#inputUserz {
+    width: 15%;
+
+
+    position: absolute;
+
+
+    top: 34%;
+    left: 24.5%;
+    width: 45%;
+
+    height: 30px;
+
+    border-radius: 5px;
+
+    border: 1px solid lightgray;
+
+
+}
+
+#inputPasswordz {
+
+    width: 15%;
+
+
+    position: absolute;
+
+
+    top: 40%;
+    left: 24.5%;
+    width: 45%;
+
+    height: 30px;
+
+    border-radius: 5px;
+
+    border: 1px solid lightgray;
+
+}
+
+#inputCaptchaz {
+    width: 15%;
+
+
+    position: absolute;
+
+
+    top: 80%;
+    left: 24.5%;
+    width: 45%;
+
+    height: 30px;
+
+    border-radius: 5px;
+}
+
+#capchaz {
+    position: absolute;
+    width: 25%;
+
+    height: 18%;
+
+    border-radius: 5px;
+
+    top: 60%;
+
+    left: 35%;
+    border: 1px solid lightgray;
+
+
+}
+#inputPasswordz1 {
+
+    width: 15%;
+
+
+    position: relative;
+
+
+    top: 46%;
+    left: 24.5%;
+    width: 45%;
+
+    height: 30px;
+
+    border-radius: 5px;
+
+    border: 1px solid lightgray;
+
+}
+#inputPasswordz1z {
+
+    width: 15%;
+
+
+    position: absolute;
+
+
+    top: 46%;
+    left: 24.5%;
+    width: 45%;
+
+    height: 30px;
+
+    border-radius: 5px;
+
+    border: 1px solid lightgray;
+}
+
+
+#inputPassword2 {
+
+
+    width: 15%;
+
+
+    position: absolute;
+
+
+    top: 52%;
+    left: 24.5%;
+    width: 45%;
+
+    height: 30px;
+
+    border-radius: 5px;
+
+    border: 1px solid lightgray;
+
+}
+#bodyContainer {
+position: absolute;
+height: 150%;
+
+width: 99.1%;
+
+background-color: rgb(255, 255, 255);
+
+border: 1px solid rgb(199, 195, 195);
+
+
+border-radius: 5px;
+
+border-bottom: none;
+}
+
+#noticeBar {
+
+width: 95%;
+
+height: 4%;
+
+
+top: 1.5%;
+
+left: 2%;
+position: absolute;
+
+
+border: 1px solid rgb(199, 195, 195);
+
+
+
+}
+
+#userContainer {
+
+
+   
+width: 20%;
+
+height: 13%;
+
+
+top: 7%;
+
+left: 2%;
+position: absolute;
+
+
+border: 1px solid rgb(199, 195, 195);
+}
+
+#pinshRED {
+
+    width: 70%;
+
+height: 7%;
+
+
+top: 7%;
+
+left: 23%;
+position: absolute;
+
+
+background-color: rgb(209, 146, 146);
+border: 1px solid rgb(199, 195, 195);
+
+color: black;
+
+font-size: 30px;
+
+font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+padding: 10px;
+
+
+
+
+}
+
+#userNameC {
+position: absolute;
+font-size: 20px;
+
+font-weight: 50;
+
+
+top: 0;
+
+left: 40%;
+color: orange;
+
+
+}
+
+#joineddate {
+
+    position: absolute;
+font-size: 20px;
+
+font-weight: 50;
+
+
+top: 15%;
+
+left: 40%;
+}
+
+#trust {
+    position: absolute;
+font-size: 20px;
+
+font-weight: 50;
+
+
+top: 30%;
+
+left: 40%;
+
+}
+
+#sales {
+
+    position: absolute;
+    font-size: 20px;
+    
+    font-weight: 50;
+    
+    
+    top: 45%;
+    
+    left: 40%;
+}
+#orders1 {
+    position: absolute;
+    font-size: 20px;
+    
+    font-weight: 50;
+    
+    
+    top: 60%;
+    
+    left: 40%;
+
+}
+
+#userImg1 {
+
+
+position: absolute;
+
+    border-radius: 55px;
+
+
+
+    height: 110px;
+
+
+    width: 110px;
+
+    left: 5%;
+
+    top: 15%;
+}
+
+#userz {
+    position: absolute;
+
+    left: 23.4%;
+
+    top: 14.5%;
+
+    font-size: 30px;
+
+    color:#3b3b3b;
+}
+
+#autoshop {
+
+    width: 20%;
+
+height: 8%;
+
+
+top: 21%;
+
+left: 2%;
+position: absolute;
+
+
+border: 1px solid rgb(199, 195, 195);
+
+}
+
+#autoshopName {
+
+    border: 1px solid rgb(199, 195, 195);
+
+    width: 90%;
+
+
+    height: 25%;
+
+
+    background-color: rgb(228, 228, 228);
+
+    position: absolute;
+
+
+    top: 10%;
+
+    left: 6%;
+    
+    
+
+}
+
+#move {
+position: absolute;
+
+    top: -60%;
+
+    left: 10%;
+
+    font-size: 20px;
+}
+
+#access1 {
+
+color:darkorange;
+
+
+z-index: 5;
+
+
+position: absolute;
+
+
+bottom: 20%;
+
+left: 6%;
+
+border: 1px solid rgb(199, 195, 195);
+
+
+width: 90%;
+
+font-weight: 70;
+
+}
+
+#access2 {
+
+    color: darkorange;
+    
+    
+    z-index: 5;
+    
+    
+    position: absolute;
+    
+    
+    bottom: -5%;
+    
+    left: 6%;
+    
+    border: 1px solid rgb(199, 195, 195);
+    
+    
+    width: 90%;
+    
+    font-weight: 70;
+    
+    }
+
+    #lottery {
+
+        width: 20%;
+
+        height: 8%;
+        
+        
+        top: 31%;
+        
+        left: 2%;
+        position: absolute;
+        
+        
+        border: 1px solid rgb(199, 195, 195);
+    }
+
+    #lotteryNAME {
+
+        border: 1px solid rgb(199, 195, 195);
+
+        width: 90%;
+    
+    
+        height: 25%;
+    
+    
+        background-color: rgb(228, 228, 228);
+    
+        position: absolute;
+    
+    
+        top: 10%;
+    
+        left: 6%;
+    }
+
+    #move1 {
+        position: absolute;
+        top: -50%;
+
+        left: 10%;
+    
+        font-size: 20px;
+    }
+
+
+    #access4 {
+
+        color: darkorange;
+        
+        
+        z-index: 5;
+        
+        
+        position: absolute;
+        
+        
+        bottom: -5%;
+        
+        left: 6%;
+        
+        border: 1px solid rgb(199, 195, 195);
+        
+        
+        width: 90%;
+        
+        font-weight: 70;
+        
+        }
+
+        #quickSearch {
+            width: 70%;
+
+            height: 10%;
+            
+            
+            top: 25%;
+            
+            left: 23%;
+            position: absolute;
+            
+            
+            border: 1px solid rgb(199, 195, 195);
+
+        }
+
+        #quicksearch1 {
+
+            
+        border: 1px solid rgb(199, 195, 195);
+
+        width: 98%;
+    
+    
+        height: 25%;
+    
+    
+        background-color: rgb(228, 228, 228);
+    
+        position: absolute;
+    
+    
+        top: 10%;
+    
+        left: 1%;
+        }
+
+        #move2 {
+            position: absolute;
+            top: -40%;
+    
+            left: 5%;
+        
+            font-size: 20px;
+
+        }
+
+        #searching {
+
+            position: absolute;
+
+            width: 60%;
+
+            height: 17%;
+
+            left: 7%;
+        }
+
+        #confirmSearch {
+
+
+            width: 6.5%;
+
+
+            background-color: darkorange;
+
+            color: white;
+
+
+            border-radius: 10px;
+
+            height: 24%;
+            position: absolute;
+            left: 68%;
+
+            border: none;
+
+
+
+
+
+        }
+
+        #searrch {
+
+            position: relative;
+
+            bottom: -35%;
+            left: .85%;
+
+            font-weight: 40;
+
+        }
+
+
+        #featured {
+
+
+            width: 70%;
+
+            height: 40%;
+            
+            
+            top: 36.4%;
+            
+            left: 23%;
+            position: absolute;
+            
+            
+            border: 1px solid rgb(199, 195, 195);
+        }
+
+        #quicksearch2 {
+            border: 1px solid rgb(199, 195, 195);
+
+            width: 98%;
+        
+        
+            height: 6.5%;
+        
+        
+            background-color: rgb(228, 228, 228);
+        
+            position: absolute;
+        
+        
+            top: 3%;
+        
+            left: 1%;
+
+        }
+
+
+        #move3 {
+
+            position: absolute;
+            top: -40%;
+    
+            left: 5%;
+        
+            font-size: 20px;
+
+        }
+
+        #acidListing {
+
+
+            position: absolute;
+
+
+            width: 20%;
+
+
+            height: 20%;
+        }
+
+        #looney {
+
+
+            width: 100px;
+
+        height: 100px;
+        background-color: gray;
+
+        }
+
+.looneyHeader {
+position: relative;
+font-size: 15px;
+
+color: darkorange;
+
+font-weight: 50;
+
+top: 650%;
+
+left: 44%;
+
+}
+
+.itemnumber {
+    position: relative;
+    font-size: 15px;
+    
+   
+    
+    font-weight: 50;
+    
+    top: -1100%;
+    
+    left: 44%;
+    
+    }
+
+    .buyz{
+        position: relative;
+        font-size: 15px;
+        
+       
+        
+        font-weight: 50;
+        
+        top: -1200%;
+        
+        left: 44%;
+        
+        }
+#FakeIdListing {
+
+
+    
+    position: absolute;
+
+
+    width: 20%;
+
+
+    height: 20%;
+
+
+    top: 350%;
+
+    
+}
+
+#BlackTar {
+    
+    position: absolute;
+
+
+    width: 20%;
+
+
+    height: 20%;
+
+
+    top: 600%;
+
+}
+
+#AdderalListing {
+    position: absolute;
+
+
+    width: 20%;
+
+
+    height: 20%;
+
+
+    top: 950%;
+
+
+
+}
+
+#ShroomsListing {
+
+    position: absolute;
+
+
+    width: 20%;
+
+
+    height: 20%;
+
+
+    left: 33%;
+}
+
+
+#MethListing {
+
+    
+    position: absolute;
+
+
+    width: 20%;
+
+
+    height: 20%;
+
+
+    left: 33%;
+
+    top: 300%;
+
+}
+
+#CocaineListing {
+
+    position: absolute;
+
+
+    width: 20%;
+
+
+    height: 20%;
+
+
+    left: 33%;
+
+    top: 600%;
+}
+
+#mdmaListing {
+
+    position: absolute;
+
+
+    width: 20%;
+
+
+    height: 20%;
+
+
+    left: 33%;
+
+    top: 900%;
+}
+
+#BrowseBar {
+
+    position: absolute;
+
+
+    height: 36.5%;
+
+    width: 20%;
+
+
+    border: 1px solid rgb(199, 195, 195);
+
+    left: 2%;
+
+    top: 40%;
+}
+
+#brows {
+
+    border: 1px solid rgb(199, 195, 195);
+
+    width: 91.5%;
+
+
+    height: 6.5%;
+
+
+    background-color: rgb(228, 228, 228);
+
+    position: absolute;
+
+
+    top: 3%;
+
+    left: 4.5%;
+
+}
+#move6 {
+    position: absolute;
+            top: -42%;
+    
+            left: 11%;
+        
+            font-size: 20px;
+
+}
+
+/* Style for the container */
+#categorContainer {
+    width: 90%; /* Full width of parent */
+    max-width: 400px; /* Limit width for responsiveness */
+    border-radius: 8px;
+    padding: 15px;
+    overflow-y: auto; /* Scrollable content if overflowing */
+    max-height: 400px; /* Limit height */
+    margin-top: 45px;
+  
+  }
+  
+  /* General details styling */
+  details {
+    margin-bottom: 10px; /* Space between each details block */
+    width: 100%; /* Ensure full width within container */
+    border-bottom: 1px solid rgb(199, 195, 195);
+    padding-bottom: 5px; /* Space below the summary */
+    transition: all 0.3s ease; /* Smooth open/close transition */
+  }
+  
+  /* Summary styling */
+  summary {
+    font-size: 20px;
+    color: orange;
+    cursor: pointer; /* Indicates it's clickable */
+    list-style: none; /* Remove default marker spacing */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  /* Marker customization */
+  summary::marker {
+    z-index: 100;
+    color: lightgray;
+    font-size: 18px;
+  }
+  
+  /* Hover and focus styling for summary */
+  summary:hover {
+    color: darkorange;
+  }
+  
+  summary:focus {
+    outline: none; /* Remove browser focus outline */
+    color: #ff6600; /* Highlight when focused */
+  }
+  
+  /* Nested list styling */
+  .nested-list {
+    margin-left: 20px; /* Indent nested list */
+    list-style-type: square; /* Bullet points */
+    padding-left: 0;
+    color: #333;
+  }
+  
+  /* Fix nested list positioning */
+  .nested-list li {
+    margin-bottom: 5px; /* Space between list items */
+  }
+  
+  /* Individual summary IDs */
+  #fraud1,
+  #drugschem {
+    color: orange; /* Unique styles if needed */
+
+    
+  }
+  
+  /* Optional: Scrollbar styling for container */
+  #categorContainer::-webkit-scrollbar {
+    width: 6px;
+    display: none;
+  }
+  
+  #categorContainer::-webkit-scrollbar-thumb {
+    background: lightgray;
+    border-radius: 8px;
+  }
+  
+  #categorContainer::-webkit-scrollbar-thumb:hover {
+    background: gray;
+  }
+  
+
+#secur {
+    border: 1px solid rgb(199, 195, 195);
+
+    position: absolute;
+
+    width: 100%;
+
+    height: 35%;
+
+    top: 103%;
+
+
+
+
+}
+
+#access6 {
+
+    position: relative;
+    background-color: rgb(228, 228, 228);
+
+
+    color: rgb(0, 0, 0);
+
+    opacity: .75;
+
+    border: none;
+
+    left: 20px;
+
+
+    font-size: 15px;
+
+    top: 18px;
+
+    height: 20%;
+
+    top: 10%;
+
+    width: 97%;
+    border: 1px solid rgb(199, 195, 195);
+}
+
+#fumble {
+    position: absolute;
+            top: -42%;
+    
+            left: 5.6%;
+        
+            font-size: 20px;
+}
+
+#statusSecure {
+
+    position: absolute;
+    border: 1px solid rgb(199, 195, 195);
+    background-color: rgb(204, 204, 204);
+    width: 96.5%;
+
+    left: 2%;
+
+    height: 6%;
+
+    top: 47%;
+    
+}
+
+#label1 {
+    position: relative;
+    left: 2%;
+}
+
+#label2 {
+    position: relative;
+    left: 2%;
+
+    font-weight: 50;
+
+    top: 5%;
+}
+
+#label3 {
+    position: relative;
+
+    left: 2%;
+
+    font-weight: 50;
+}
+
+#inv {
+
+    border: 1px solid rgb(199, 195, 195);
+
+    position: absolute;
+
+    width: 100%;
+
+    height: 45%;
+
+    top: 140%;
+}
+
+#access7 {
+
+    position: relative;
+    background-color: rgb(228, 228, 228);
+
+
+    color: rgb(0, 0, 0);
+
+    opacity: .75;
+
+    border: none;
+
+    left: 20px;
+
+
+    font-size: 15px;
+
+    top: 15px;
+
+    height: 15%;
+
+    top: 5%;
+
+    
+
+    width: 97%;
+    border: 1px solid rgb(199, 195, 195);
+}
+
+#fumble1 {
+
+    position: absolute;
+    top: -42%;
+
+    left: 5.6%;
+
+    font-size: 20px;
+}
+
+
+#label4 {
+    position: relative;
+    left: 2%;
+
+    font-weight: 50;
+
+    top: 5%;
+}
+#label5 {
+    position: relative;
+    left: 2%;
+
+    font-weight: 50;
+
+    top: 5%;
+}
+
+#label6 {
+    position: relative;
+    left: 2%;
+
+    font-weight: 50;
+
+    top: 5%;
+}
+
+#label7 {
+    position: relative;
+    left: 2%;
+
+    font-weight: 50;
+
+    top: 5%;
+}
+#News {
+
+    border: 1px solid rgb(199, 195, 195); 
+
+
+    height: 110%;
+
+    position: absolute;
+
+    top: 188%;
+    width: 100%;
+}
+
+#access8 {
+
+    position: relative;
+    background-color: rgb(228, 228, 228);
+
+
+    color: rgb(0, 0, 0);
+
+    opacity: .75;
+
+    border: none;
+
+    left: 20px;
+
+
+    font-size: 15px;
+
+    top: 13px;
+
+    height: 8%;
+
+    top: 2%;
+
+    
+
+    width: 97%;
+    border: 1px solid rgb(199, 195, 195);
+}
+
+#fumble1 {
+
+    position: absolute;
+    top: -30%;
+
+    left: 5.6%;
+
+    font-size: 20px;
+}
+#topz {
+
+
+    position: absolute;
+
+    font-size: 25px;
+
+    top: 15%;
+    left: 2.5%;
+    font-weight: 70;
+}
+
+#label8 {
+    position: relative;
+    left: 2.65%;
+
+    font-weight: 50;
+
+    top: 13%;
+
+}
+
+#profile-img-upload {
+
+    position: absolute;
+
+    border-radius: 30px;
+
+
+
+    height: 110px;
+
+
+    width: 110px;
+
+    left: 5%;
+
+    top: 15%;
+
+    opacity: 0;
+
+    z-index: 5;
+    
+}
+
+#Searchingz {
+
+    border: 1px solid rgb(199, 195, 195); 
+
+
+    height: 110%;
+
+    position: absolute;
+
+    top: 103%;
+    width: 28.5%;
+
+    left: -30%;
+
+    
+
+}
+
+#access9 {
+
+    position: relative;
+    background-color: rgb(228, 228, 228);
+
+
+    color: rgb(0, 0, 0);
+
+    opacity: .75;
+
+    border: none;
+
+    left: 20px;
+
+
+    font-size: 15px;
+
+    top: 15px;
+
+    height: 5.5%;
+
+    top: 5%;
+
+    
+
+    width: 90%;
+    border: 1px solid rgb(199, 195, 195);
+
+}
+
+#fumble3 {
+
+    position: absolute;
+    top: -42%;
+
+    left: 11%;
+
+    font-size: 20px;
+
+}
+
+.check-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    
+}
+
+.checkbox {
+    display: none; /* Hide the default checkbox */
+   
+}
+
+.circle {
+    width: 15px;
+    height: 15px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    
+}
+
+.checkbox:checked + .circle {
+    border-color: #4caf50;
+    background-color: #e8f5e9;
+}
+
+.checkbox:checked + .circle::after {
+    content: '✓';
+    color: #4caf50;
+    font-size: 24px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#divvy {
+
+position: absolute;
+
+top: 22%;
+
+left: 5%;
+
+}
+
+#hach3 {
+    position: absolute;
+
+
+    top: 10%;
+
+    left: 5%;
+
+   
+
+    
+}
+
+#hello {
+
+    position: absolute;
+
+    top: 16.5%;
+
+    left: 5%;
+
+    width: 70%;
+}
+#srchbtn {
+
+
+    width: 26.5px;
+
+    height: 20px;
+
+    position: absolute;
+
+    left: 80%;
+
+    top: 16.5%;
+
+    background-color: rgb(148, 147, 147);
+    border: 1px solid rgb(199, 195, 195); 
+}
+
+#refrsh {
+
+
+    width: 26.5px;
+
+    height: 20px;
+
+    position: absolute;
+
+    left: 90%;
+
+    top: 16.5%;
+
+    background-color: rgb(148, 147, 147);
+    border: 1px solid rgb(199, 195, 195); 
+}
+
+#priceRange {
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+ #pr {
+
+
+    position: absolute;
+
+
+    top: 25%;
+    left: 5%;
+ }
+
+ #mover {
+    position: absolute;
+
+    left: 5%;
+
+  top: 32%;
+ }
+
+ #cat {
+
+    position: absolute;
+
+    top: 33%;
+
+    left: 5%;
+ }
+
+ #priceTo1 {
+
+
+    position: absolute;
+
+    left: 1%;
+
+    top: 95%;
+
+    width:300%;
+ }
+
+
+
+
+ #origin {
+
+    position: absolute;
+
+    top: 39%;
+
+    left: 5%;
+ }
+
+ #priceTo2 {
+
+
+    position: absolute;
+
+    left: 1%;
+
+    top: 95%;
+
+    width: 200%;
+ }
+
+
+ #Ship {
+
+    position: absolute;
+
+    top: 45%;
+
+    left: 5%;
+ }
+
+ #priceTo3 {
+
+
+    position: absolute;
+
+    left: 1%;
+
+    top: 95%;
+
+    width: 325%;
+ }
+
+
+ #Orderz {
+
+    position: absolute;
+
+    top: 51%;
+
+    left: 5%;
+ }
+
+ #priceTo4 {
+
+
+    position: absolute;
+
+    left: 1%;
+
+    top: 95%;
+
+    width: 294%;
+ }
+
+ #stock {
+
+    position: absolute;
+
+    top: 57%;
+
+    left: 5%;
+ }
+
+ #priceTo5 {
+
+
+    position: absolute;
+
+    left: 1%;
+
+    top: 95%;
+
+    width: 330%;
+ }
+
+
+ #Payment {
+
+    position: absolute;
+
+    top: 63%;
+
+    left: 5%;
+ }
+
+ #priceTo6 {
+
+
+    position: absolute;
+
+    left: 1%;
+
+    top: 95%;
+
+    width: 315%;
+ }
+
+
+
+ 
+ #Coin {
+
+    position: absolute;
+
+    top: 69%;
+
+    left: 5%;
+ }
+
+ #priceTo7 {
+
+
+    position: absolute;
+
+    left: 1%;
+
+    top: 95%;
+
+    width: 540%;
+ }
+
+
+
+ #Verified {
+
+    position: absolute;
+
+    top: 75%;
+
+    left: 5%;
+ }
+
+ #priceTo8 {
+
+
+    position: absolute;
+
+    left: 1%;
+
+    top: 95%;
+
+    width: 345%;
+ }
+
+ #pr1 {
+
+
+    position: absolute;
+
+    top: 83%;
+
+    left: 5%;
+ }
+
+ #mover1 {
+
+    position: absolute;
+
+    top: 91%;
+
+    left: 5%;
+
+    width: 80%;
+ }
+
+#priceFrom01 {
+    
+    
+
+    width: 30%;
+}
+
+
+#priceTo01 {
+    
+    
+
+    width: 35%;
+}
+
+
+#WeedListing {
+
+    position: absolute;
+
+
+    width: 20%;
+
+
+    height: 20%;
+
+
+    left: 68%;
+
+}
+#sCB {
+
+    position: absolute;
+
+
+    width: 20%;
+
+
+    height: 20%;
+
+
+    left: 68%; 
+
+    top: 350%;
+
+}
+
+
+#oil {
+
+    position: absolute;
+
+
+    width: 20%;
+
+
+    height: 20%;
+
+
+    left: 68%; 
+
+    top: 600%;
+
+}
+
+#dmt {
+
+   
+    position: absolute;
+
+
+    width: 20%;
+
+
+    height: 20%;
+
+
+    left: 68%; 
+
+    top: 950%; 
+}
+
+#capChan {
+
+position: absolute;
+
+
+top: 55%;
+
+
+font-size: 30px;
+
+left: 40%;
+
+z-index: 2;
+letter-spacing: 20px;
+
+color: white;
+
+opacity: .5;
+
+
+
+}
+
+#EXCHANGE {
+
+
+    border: 1px solid rgb(199, 195, 195); 
+
+
+    height: 55%;
+
+    position: absolute;
+
+    top: 123%;
+    width: 20%;
+
+    left: 2%;
+
+}
+
+#btc1 {
+    position: absolute;
+    left: 5.5%;
+
+    top: 10%;
+
+    font-weight: 75;
+}
+
+#holder1 {
+    position: absolute;
+    left: 6%;
+
+    top: 16%;
+
+    font-weight: 75;
+
+   
+
+}
+
+.Hexlo {
+
+    font-weight: 60;
+
+    font-size: 15px;
+
+  
+
+
+    
+    
+}
+
+#DEPOSITS {
+
+
+    color: darkorange;
+}
+ 
+
+#holder2 {
+
+    position: absolute;
+    left: 6%;
+
+    top: 45%;
+
+    font-weight: 75;
+}
+
+
+#ltc1 {
+    position: absolute;
+    left: 5.5%;
+
+    top: 38%;
+
+    font-weight: 75;
+}
+
+#holder3 {
+
+    position: absolute;
+    left: 6%;
+
+    top: 73%;
+
+    font-weight: 75;
+}
+
+#xmr1 {
+
+    position: absolute;
+    left: 5.5%;
+
+    top: 66%;
+
+    font-weight: 75;
+}
+
+#time {
+position: absolute;
+bottom: -100%;
+
+right: 0;
+
+
+
+}
+
+#heyman {
+
+
+    position: absolute;
+    bottom: -100.65%;
+    
+    right: 16%;
+
+    font-size: 15px;
+
+    font-weight: 50;
+     
+}
+
+#copyrighted {
+position: absolute;
+font-weight: 50;
+font-size: 15px;
+bottom: -100.65%;
+
+left: 1.25%;
+
+
+}
+
+.nav-link {
+    position: absolute;
+    width: auto; /* Adjust width for text size */
+    height: auto; /* Adjust height for text size */
+   
+ 
+    text-decoration: none; /* Remove underline */
+
+ 
+
+    display: inline-block; /* Ensure it's inline for links */
+    text-align: center;
+}
+
+#btn22 {
+    position: absolute;
+    left: 7%;
+}
+
+#btn32 {
+
+
+    position: absolute;
+
+    left: 15.25%;
+}
+
+#btn45 {
+
+    
+    position: absolute;
+
+    left: 22.25%;
+}
+
+#lotteryz {
+
+    width: 20%;
+
+    height: 60%;
+    
+    
+    top: 30%;
+    
+    left: 1%;
+    position: absolute;
+    
+    
+    border: 1px solid rgb(199, 195, 195);
+
+    border-radius: 7px;
+}
+
+#linkBar {
+
+        position: absolute;
+    border: 1px solid rgb(199, 195, 195);
+
+    width: 97.5%;
+
+
+    height: 5%;
+
+    top: 20%;
+
+    left: 1%;
+
+}
+
+
+
+#lotteryNAMEz {
+ 
+    border: 1px solid rgb(199, 195, 195);
+
+    width: 90%;
+
+
+    height: 5%;
+
+
+    background-color: rgb(228, 228, 228);
+
+    position: absolute;
+
+
+    top: 2%;
+
+    left: 6%;
+}
+
+#move1z {
+    position: absolute;
+    top: -47%;
+
+    left: 11%;
+
+    font-size: 20px;
+
+}
+
+#containerofthe {
+
+    position: absolute;
+
+    left: .85%;
+
+    top: 90%;
+
+}
+
+.corn {
+
+
+    border-bottom: 1px solid rgb(199, 195, 195);
+    width: 253%;
+    color: orange;
+
+    font-weight: 50;
+
+  
+
+   
+
+  
+}
+
+#ChatModal {
+
+    width: 60%;
+
+    height: 60%;
+    
+    
+    top: 30%;
+    
+    left: 22%;
+    position: absolute;
+    
+    
+    border: 1px solid rgb(199, 195, 195);
+
+    border-radius: 7px;
+
+}
+
+#chatModalNameDiv { 
+
+    border: 1px solid rgb(199, 195, 195);
+
+    width: 70%;
+
+
+    height: 5.5%;
+
+
+    background-color: rgb(228, 228, 228);
+
+    position: absolute;
+
+    border-radius: 10px;
+    top: 4%;
+
+    left: 15%;
+
+}
+
+#move1zz {
+
+    position: absolute;
+    top: -47%;
+
+    left: 11%;
+
+    font-size: 20px;
+}
+
+#inputcntr {
+
+position: absolute;
+
+bottom: 5%;
+
+left: 15%;
+
+width: 69.5%;
+
+border-radius: 5px;
+
+height: 5%;
+
+top: 90;
+
+}
+
+
+
+#sendChatBtn {
+    position: absolute;
+background-image: url(/Screenshot\ 2024-11-27\ 134232.png);
+
+width: 30px;
+
+height: 25px;
+
+
+
+bottom: 5.75%;
+border-radius: 25px;
+left: 82%;
+
+
+z-index: 5;
+
+border: none;
+transform: rotate(-45deg);
+background-size: cover; /* Ensures the image covers the entire div */
+background-repeat: no-repeat; /* Prevents the image from repeating */
+background-position: center;
+}
+
+#containeroftheChat {
+
+
+    position: absolute;
+
+    width: 70%;
+
+    height: 80%;
+    border:  1px solid rgb(199, 195, 195);
+
+    border-radius: 10px;
+
+    left: 15%;
+
+    top: 9.5%;
+}
+
+#callBtn {
+
+height: 25px;
+
+width: 25px;
+
+
+position: absolute;
+
+
+border-radius: 30px;
+top: 6%;
+
+background-image: url(https://e7.pngegg.com/pngimages/901/956/png-clipart-computer-icons-telephone-call-symbol-phone-miscellaneous-logo.png);
+
+left: 1%;
+background-size: cover; /* Ensures the image covers the entire div */
+background-repeat: no-repeat; /* Prevents the image from repeating */
+background-position: center; /* Centers the image within the div */
+
+}
+
+
+
+#captchaDiv {
+position: absolute;
+    left: 40%;
+
+    top: 69%;
+
+letter-spacing: 10px;
+
+opacity: .15;
+
+}
+
+#empireimg1 {
+    width: 90px;
+    height: 90px;
+
+    /* Blend the image with its parent background */
+    mix-blend-mode: multiply; /* Try overlay, screen, or lighten for different effects */
+
+    /* Optional: Add a background color to enhance blending */
+    background-color: white;
+
+    border-radius: 100px;
+
+    position: absolute;
+
+    top: 7%;
+}
+
+/* Optional: Hover effect to enhance the blend */
+#empireimg1:hover {
+    opacity: 1; /* Fully visible on hover */
+    transform: scale(1.05); /* Slight zoom */
+    transition: all 0.3s ease;
+}
+
+#Express {
+
+
+    position: absolute;
+
+    z-index: 2;
+
+
+   
+
+    color: orange;
+
+    font-size: 45px;
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    font-weight: 450;
+
+  
+
+    left: 25%;
+
+    top: 4.15%;
+}
+
+
+
+
+#Market {
+
+
+    position: absolute;
+
+    z-index: 2;
+
+
+   
+
+    color: rgb(61, 61, 61);
+
+    font-size: 45px;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-weight: 500;
+
+   
+
+    left: 34%;
+
+    top: 4.15%;
+}
+
+
+#empireimg2 {
+    width: 80px;
+    height: 80px;
+
+    /* Blend the image with its parent background */
+    mix-blend-mode: multiply; /* Try overlay, screen, or lighten for different effects */
+
+    /* Optional: Add a background color to enhance blending */
+    background-color: white;
+
+    border-radius: 100px;
+
+    position: absolute;
+
+    top: .75%;
+
+    
+}
+
+
+
+
+#Express1 {
+
+
+    position: absolute;
+
+    z-index: 2;
+
+
+   
+
+    color: orange;
+
+    font-size: 45px;
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    font-weight: 450;
+
+  
+
+    left: 25%;
+
+    top: -2.5%;
+}
+
+
+
+
+#Market1 {
+
+
+    position: absolute;
+
+    z-index: 2;
+
+
+   
+
+    color: rgb(61, 61, 61);
+
+    font-size: 45px;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-weight: 500;
+
+   
+
+    left: 34%;
+
+    top: -2.5%;
+}
+
+#empireimg {
+    width: 75px;
+    height: 75px;
+
+    /* Blend the image with its parent background */
+    mix-blend-mode: multiply; /* Try overlay, screen, or lighten for different effects */
+
+    /* Optional: Add a background color to enhance blending */
+    background-color: white;
+
+    border-radius: 100px;
+
+    position: relative;
+
+    top: -3%;
+
+}
+
+
+
+#Express2 {
+
+
+    position: absolute;
+
+    z-index: 2;
+
+
+   
+
+    color: orange;
+
+    font-size: 45px;
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    font-weight: 450;
+
+  
+
+    left: 5%;
+
+    top: -2.5%;
+}
+
+
+
+
+#Market2 {
+
+
+    position: absolute;
+
+    z-index: 2;
+
+
+   
+
+    color: rgb(61, 61, 61);
+
+    font-size: 45px;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-weight: 500;
+
+   
+
+    left: 14%;
+
+    top: -2.5%;
+}
+
+
+#lotteryz1 {
+
+    width: 20%;
+
+    height: 40%;
+    
+    
+    top: 7%;
+    
+    left: 1.95%;
+    position: absolute;
+    
+    
+    border: 1px solid rgb(199, 195, 195);
+
+    border-radius: 7px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.product-container {
+        
+    border: 1px solid rgb(199, 195, 195);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    position: absolute;
+    left: 40%;
+    height: 37%;
+    top: 7%;
+}
+
+.product-container1 {
+        
+    border: 1px solid rgb(199, 195, 195);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    position: absolute;
+    left: 40%;
+    height: 37%;
+    top: 7%;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.product-form-group {
+    margin-bottom: 15px;
+}
+
+.product-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.product-form-group input[type="text"], 
+.product-form-group input[type="number"], 
+.product-form-group textarea, 
+.product-form-group input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+}
+
+
+
+
+
+
+
+
+#product-container {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 1245px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 5px 4px 16px rgba(0, 0, 0, 0.1);
+    position: relative;  /* Use relative instead of absolute */
+    left: 8%;
+    top: 6%;
+    width: 75%;
+    height: 66%;
+    background-color: white;
+    z-index: 100;
+    overflow-y: scroll;
+}
+
+/* Header/title for the category */
+
+/* Post styling */
+.product-item {
+   
+    padding: 15px;
+    margin: 10px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+  
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+
+    height: 14%;
+}
+
+
+
+#heyf {
+    width: 12%;
+    max-height: 250px; /* Limits the height */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border-radius: 8px;
+    margin-top: -10px;
+    border: 1px solid #ddd;
+    position: absolute;
+    height: 130px;
+
+
+  
+    
+}
+/* Product name styling */
+
+
+/* Nested-list styles (if used for the categories) */
+#eey3 {
+position: absolute;
+
+left: 17%;
+margin-top: -10px;
+}
+
+#desc {
+    position: absolute;
+
+    left: 17%;
+   
+
+}
+
+#price {
+    position: absolute;
+
+    left: 17%;
+    margin-top: 36px;
+}
+.delete-button {
+
+
+    position: absolute;
+
+    left: 92.5%;
+}
+
+
+#posted-by {
+  
+    position: absolute;
+
+    left: 4%;
+    margin-top: 125px;
+
+    font-size: 13.5px;
+
+  }
+
+  #Logoutbtn {
+    position: absolute;
+
+    border-radius: 7px;
+
+  
+
+    top: 82%;
+  }
+
+
+  .product-container {
+    z-index: 5;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: absolute;
+
+    width: 1225px;
+    height: 100%;
+    left: 0;
+    top: 0;
+   
+  }
+
+  .product-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .product-header img {
+    max-width: 150px;
+    margin-right: 20px;
+  }
+
+  .product-header .details {
+    flex: 1;
+  }
+
+  .details h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    color: #333;
+  }
+
+  .details .info {
+    font-size: 14px;
+    color: #555;
+  }
+
+  .price {
+    font-size: 24px;
+    color: #d9534f;
+    margin: 10px 0;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .buy-now {
+    background-color: #d9534f;
+    color: #fff;
+  }
+
+  .buy-now:hover {
+    background-color: #c9302c;
+  }
+
+  .queue {
+    background-color: #f0ad4e;
+    color: #fff;
+  }
+
+  .queue:hover {
+    background-color: #ec971f;
+  }
+
+  .description {
+    margin-top: 20px;
+  }
+
+  .description h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+
+  .description p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+
+  .table th, .table td {
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+
+  .table th {
+    background-color: #f1f1f1;
+  }

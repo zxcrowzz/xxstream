@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+
+
+<html>
+
+
+
+<link rel="stylesheet" href="em.css">
+
+<img alt="No image supported" id = "empireimg1" src= "/DALL·E 2024-11-25 01.08.22 - A minimalistic orange and yellow crown logo with simple geometric shapes. The design features smooth gradients and a sleek, modern style. The crown co.webp">
+
+<h3 id = "Express">Express</h3>
+<h3 id = "Market">Market</h3>
+<div id = "divContainer">
+   
+    <div id = "navbar1">
+        <form action="/redirect1" method="post">
+            <button id ="btn1" class = "class3">
+                LOGIN
+    
+            </button>
+        </form>
+       
+        <form action="/redirect" method="post">
+            <button id ="btn22" class = "class3">
+                REGISTER
+    
+            </button>
+
+
+        </form>
+
+    
+
+        <button id ="btn32" class = "class3">
+            FORUMS
+
+        </button>
+
+        <button id ="btn45" class = "class3">
+            VERIFY MIRROR
+
+        </button>
+
+
+
+
+
+    </div>
+
+
+    <div id = "currentNav">
+
+
+
+    </div>
+
+
+    <div id = "loginContainer">
+
+        <h3 id = "h33">
+            Welcome to Express Market! Please login to access the marketplace. If you do not have an account, you can <button id = "buttonRegister">resgister</button> to get access to the listings.
+            <p id = "p33">Registrations are free and open to everyone. If you have lost your password, please use the <button id = "lostPasswordButton">forgot password</button> form to reset your password.</p>
+
+        </h3>
+        <div id ="loginHeader">
+
+            LOGIN TO EXPRESS MARKET
+
+
+        </div>
+
+
+        <form action="/login" method="post">
+        <input placeholder="Username" id ="inputUser" name = "email" required>
+        <input type="password" placeholder="Password" id ="inputPassword" name = "password" required>
+        <input placeholder="What's the captcha? " name = "capIn" id ="inputCaptcha" required>
+        <input type="hidden" id="hiddenCaptcha" name="generatedCaptcha">
+        <div id = "capchaDiv">
+                <h3 id = "capChan">12345</h3>
+            <img alt="noimage" id = "capcha" src="https://i0.wp.com/qualiacomputing.com/wp-content/uploads/2020/05/h3_634-1001.png?resize=960%2C700&ssl=1">
+        </div>
+        <button id = "loginButton">    
+
+            Login
+
+        </button>
+
+
+        </form>
+    </div>
+
+</div>
+
+
+<script>
+
+
+
+
+const doc = document.getElementById("capChan");
+const hiddenCaptcha = document.getElementById("hiddenCaptcha");
+
+function generateCaptcha() {
+    const words = [
+        "1", "3", "Q", "8", "9",
+        "2", "6", "4", "A", "Z"
+    ];
+    
+    let captcha = "";
+    for (let i = 0; i < 5; i++) {
+        captcha += words[Math.floor(Math.random() * words.length)];
+    }
+    return captcha;
+}
+
+// Generate and set the CAPTCHA on page load
+const captcha = generateCaptcha();
+doc.textContent = captcha;
+hiddenCaptcha.value = captcha;  // Set the CAPTCHA in the hidden field
+  // Set the CAPTCHA in the hidden field
+
+</script>
+</html>
