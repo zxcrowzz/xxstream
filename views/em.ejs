@@ -1011,18 +1011,7 @@ function renderDetailedProduct(product) {
         amount: {
           value: product.price.toString() // Set the amount dynamically
         },
-        shipping: {
-          address: {
-            // Optionally, you can define shipping fields here, 
-            // but PayPal will ask the buyer for their shipping address during the checkout process.
-            address_line_1: '123 Shipping St.',
-            address_line_2: 'Apt 4B',
-            admin_area_2: 'CityName',
-            admin_area_1: 'StateName',
-            postal_code: '12345',
-            country_code: 'US'
-          }
-        }
+        
       }]
     });
   },
