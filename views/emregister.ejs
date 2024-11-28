@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+
+
+<html>
+
+
+
+<link rel="stylesheet" href="em.css">
+
+<img alt="No image supported" id = "empireimg2" src= "/DALL·E 2024-11-25 01.08.22 - A minimalistic orange and yellow crown logo with simple geometric shapes. The design features smooth gradients and a sleek, modern style. The crown co.webp">
+
+<h3 id = "Express1">Express</h3>
+<h3 id = "Market1">Market</h3>
+
+
+
+<div id = "divContainerz">
+
+    <div id = "navbar1">
+        <button id ="btn1" class = "class3">
+            LOGIN
+
+        </button>
+
+        <button id ="btn2" class = "class3">
+            REGISTER
+
+        </button>
+
+        <button id ="btn3" class = "class3">
+            FORUMS
+
+        </button>
+
+        <button id ="btn3" class = "class3">
+            VERIFY MIRROR
+
+        </button>
+
+
+
+
+
+    </div>
+
+
+    <div id = "currentNav">
+
+
+
+    </div>
+
+
+    <div id = "loginContainerz">
+
+        <h3 id = "h33z">
+           You are making the right choice by registering on Express Market! Choose your username and your password and you will be all set to start trading on our marketplace through a secure system
+
+           <p>You can also enter a login phrase that will be displayed to you when you log in. This will ensure that you are on the real Express Market site and not on a phishing page. This is not mandatory but recommended. Please note that we highly recommend that you enter a PGP public key in your profile; this will enable two factor authentication (2FA) for more security. </p>
+
+        </h3>
+        <div id ="loginHeader">
+
+            REGISTRATION ON EXPRESS MARKET
+
+
+        </div>
+
+
+     
+
+
+
+    <form action="/register" method="post">
+        <input required placeholder="Username" name="username" id="inputUserz">
+        <input required type="password" placeholder="Password" name="password" id="inputPasswordz">
+        <input required type="password" placeholder="Confirm Password" name="confirmPassword" id="inputPasswordz1z">
+        <input required type="email" placeholder="Email" name="email" id="inputPassword2">
+        <input required placeholder="What's the captcha?" name="captcha" id="inputCaptchaz">
+        <input type="hidden" id="hiddenCaptchaz" name="generatedCaptcha">
+        <div id="captchaDiv">
+            <img alt="Captcha image" id="capchaz" src="https://www.researchgate.net/publication/224351698/figure/fig5/AS:571184219684864@1513192338826/Background-with-randomly-drawn-lines-and-special-effects-in-Step-9.png">
+        </div>
+        
+        <button type="submit" id="loginButton">Register</button>
+    </form>
+
+
+
+
+
+    </div>
+
+</div>
+<script>
+
+const doc = document.getElementById("captchaDiv");
+const hiddenCaptcha = document.getElementById("hiddenCaptchaz");
+
+function generateCaptcha() {
+    const words = [
+        "1", "3", "Q", "8", "9",
+        "2", "6", "4", "A", "Z"
+    ];
+    
+    let captcha = "";
+    for (let i = 0; i < 5; i++) {
+        captcha += words[Math.floor(Math.random() * words.length)];
+    }
+    return captcha;
+}
+
+// Generate and set the CAPTCHA on page load
+const captcha = generateCaptcha();
+doc.textContent = captcha;
+hiddenCaptcha.value = captcha;  // Set the CAPTCHA in the hidden field
+  // Set the CAPTCHA in the hidden field
+</script>
+</html>
