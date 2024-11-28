@@ -24,7 +24,7 @@ app.use(express.json());
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log('Server is running on http://localhost:3000');
 });
 
@@ -409,7 +409,20 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 });
 
 app.get('/messagez', (req , res) => {
-res.render("emmessages")
+ if (req.session.userEmail1) {
+      if (req.session.isVerified) {
+          // User is logged in and verified, proceed to the page
+          return res.render("emmessages")
+      } else {
+          // User is logged in but not verified, redirect to the verification page
+          return res.render('emlogin');
+      }
+  } else {
+      // User is not authenticated, redirect to login
+      return res.render('emlogin');
+  }
+  
+
 });
 
 
@@ -437,8 +450,19 @@ app.get('/get-username', async (req, res) => {
   });
 
 app.get('/listproduct', (req , res) => {
+if (req.session.userEmail1) {
+      if (req.session.isVerified) {
+          // User is logged in and verified, proceed to the page
+          return res.render("listproduct")
+      } else {
+          // User is logged in but not verified, redirect to the verification page
+          return res.render('emlogin');
+      }
+  } else {
+      // User is not authenticated, redirect to login
+      return res.render('emlogin');
+  }
 
-res.render("listproduct")
 });
 
 app.get('/enter-code', (req, res) => {
@@ -483,6 +507,9 @@ app.use('/upload-profile', upload1.single('profileImage'), async (req, res) => {
 
 
   app.get('/profile', async (req, res) => {
+
+
+    
     try {
       const user = await User.findById(req.user._id); // Ensure the user is authenticated
   
