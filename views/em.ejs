@@ -48,13 +48,13 @@ HOME
   LIST A PRODCUT
   
 </button>
-
-<button id = "btn4" class = "class2">
+<form action="/orders" method="post">
+<button type="submit" id = "btn4" class = "class2">
 
     ORDERS
     
 </button>
-
+</form>
 <button id = "btn5" class = "class2">
 
     BECOME A VENDOR
@@ -85,9 +85,36 @@ HOME
 </div>
 
 
+
+
 <div id = "bodyContainer">
 
     
+  <form id="formz" style="display: none;" action="/order/create" method="POST">
+    <input type="hidden" name="productId" value="<%= productId %>">  <!-- Hidden productId from the URL -->
+    <input type="hidden" name="vendorId" id="vendorId" value="">  <!-- Hidden vendorId -->
+
+    <div>
+        <label for="address">Shipping Address:</label>
+        <textarea name="address" id="address" required></textarea>
+    </div>
+
+    <div>
+        <label for="payerName">Name:</label>
+        <input type="text" name="payerName" id="payerName" required>
+    </div>
+
+    <div>
+        <label for="payerEmail">Email:</label>
+        <input type="email" name="payerEmail" id="payerEmail" required>
+    </div>
+
+    <button id="sumbityy" type="submit">Place Order</button>
+</form>
+
+
+
+
 
 
 
@@ -868,62 +895,50 @@ let controller = null; // This will hold the AbortController for each request
 
 document.querySelectorAll('.clickme').forEach((summary) => {
   summary.addEventListener('click', async () => {
-    const category = summary.id; // Get the category from the clicked element
+    const category = summary.id;
     const productContainer = document.getElementById('product-container');
 
-    // If the same category is clicked again, hide the product container and reset
     if (currentCategory === category) {
-      // Reset the product container visibility
-      productContainer.innerHTML = ''; // Clear the container
+      productContainer.innerHTML = '';
       productContainer.style.display = 'none';
-      pinshRED.style.display = "block"; // Hide the container
-      currentCategory = ''; // Reset the current category
-      return; // Stop execution
+      pinshRED.style.display = "block";
+      currentCategory = '';
+      return;
     }
 
-    // Hide the previous category's products if any
     if (currentCategory !== '') {
-      productContainer.innerHTML = ''; // Clear any existing products
-      productContainer.style.display = 'none'; 
-      pinshRED.style.display = "block"; // Hide the container
+      productContainer.innerHTML = '';
+      productContainer.style.display = 'none';
+      pinshRED.style.display = "block";
     }
 
-    // Update the currentCategory to the newly clicked category
     currentCategory = category;
-
-    // Show the product container
     productContainer.style.display = 'block';
-    pinshRED.style.display = "none"; 
-    productContainer.innerHTML = ''; // Clear any existing content
+    pinshRED.style.display = "none";
+    productContainer.innerHTML = '';
 
-    // Abort the previous request if any
     if (controller) {
-      controller.abort(); // Abort the previous request
+      controller.abort();
     }
 
-    // Create a new AbortController for the new request
     controller = new AbortController();
     const signal = controller.signal;
 
-    // Fetch and render the products for the selected category
     try {
       const response = await fetch(`/products/${category}`, { signal });
       if (!response.ok) throw new Error('Failed to fetch products');
 
       const products = await response.json();
-      console.log('Products received:', products);
 
       if (products.length === 0) {
-        // Show a message if no products are available
         productContainer.innerHTML = '<p>No products available in this category.</p>';
       } else {
-        // Render the products if available
         products.forEach((product) => {
           const productItem = document.createElement('div');
           productItem.classList.add('product-item');
-          productItem.innerHTML = `
+          productItem.innerHTML = ` 
             <div class="product" data-id="${product._id}">
-              <img id="heyf" src="${product.imageUrl}" alt="${product.name}" class="product-image">
+              <img src="${product.imageUrl}" alt="${product.name}" id = "heyf">
               <h4 id="eey3">${product.name}</h4>
               <p id="desc">${product.description}</p>
               <p id="price">Price: $${product.price}</p>
@@ -931,11 +946,7 @@ document.querySelectorAll('.clickme').forEach((summary) => {
             </div>
           `;
 
-          // Add a click listener to each product to display it in the detailed view
-          productItem.addEventListener('click', () => {
-            renderDetailedProduct(product);
-          });
-
+          productItem.addEventListener('click', () => renderDetailedProduct(product));
           productContainer.appendChild(productItem);
         });
       }
@@ -949,22 +960,21 @@ document.querySelectorAll('.clickme').forEach((summary) => {
   });
 });
 
-// Function to render the detailed view of a specific product
 function renderDetailedProduct(product) {
   const productContainer = document.getElementById('product-container');
-  productContainer.innerHTML = ''; // Clear the container for the detailed view
+  productContainer.innerHTML = '';
 
   const productDetail = document.createElement('div');
   productDetail.classList.add('product-container');
   productDetail.style.display = 'block';
-  productDetail.innerHTML = `
+  productDetail.innerHTML = ` 
     <div class="product-header">
       <img src="${product.imageUrl}" alt="${product.name}" class="product-image">
       <div class="details">
         <h2>${product.name}</h2>
-        <p class="info">Sold by ${product.userId?.name || 'Unknown User'} | Vendor Level 3 | Trust Level 1</p>
-        <p class="info">${product.quantity || '100'} items left | Ships to: United States</p>
-        <p class="price">USD $${product.price}</p>
+        <p>Sold by ${product.userId?.name || 'Unknown User'} | Vendor Level 3 | Trust Level 1</p>
+        <p>${product.quantity || '100'} items left | Ships to: United States</p>
+        <p>USD $${product.price}</p>
       </div>
     </div>
     <table class="table">
@@ -992,8 +1002,70 @@ function renderDetailedProduct(product) {
   `;
 
   productContainer.appendChild(productDetail);
-}
 
+  // PayPal Button for product purchase
+  paypal.Buttons({
+  createOrder: function(data, actions) {
+    return actions.order.create({
+      purchase_units: [{
+        amount: {
+          value: product.price.toString() // Set the amount dynamically
+        },
+        shipping: {
+          address: {
+            // Optionally, you can define shipping fields here, 
+            // but PayPal will ask the buyer for their shipping address during the checkout process.
+            address_line_1: '123 Shipping St.',
+            address_line_2: 'Apt 4B',
+            admin_area_2: 'CityName',
+            admin_area_1: 'StateName',
+            postal_code: '12345',
+            country_code: 'US'
+          }
+        }
+      }]
+    });
+  },
+  onApprove: function(data, actions) {
+    return actions.order.capture().then(function(details) {
+      const orderDetails = {
+        productId: product._id,
+        productName: product.name,
+        price: product.price,
+        quantity: 1,
+        vendorId: product.userId._id,
+        payerName: details.payer.name.given_name,
+        payerEmail: details.payer.email_address,
+        orderId: details.id,
+        // Extract shipping address from PayPal details
+        shippingAddress: details.purchase_units[0].shipping.address
+      };
+
+      // Send the order details including the shipping address to your backend
+      fetch('/order/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(orderDetails)
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert('Order placed successfully!');
+          window.location.href = '/orders';
+        } else {
+          alert('Error placing order: ' + data.message);
+        }
+      })
+      .catch(err => {
+        console.error('Error:', err);
+        alert('Failed to place the order');
+      });
+    });
+  }
+}).render('.product-container');
+}
 
 
 
@@ -1051,6 +1123,19 @@ document.getElementById('Logoutbtn').addEventListener('click', async () => {
   }
 });
 
+
+
+
+
+
 </script>
 
+
+
+
+
+<script src="https://www.paypal.com/sdk/js?client-id=AY2pt8XxrPp2akyFT8D7K25PHzQIK8T8ODaPdHkiS9hKJ5zPg1jLoPDkb2gtzqcSIQu5BfgwdXFk9sG1&components=buttons"></script>
+
+
+  
 </html>

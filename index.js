@@ -298,26 +298,31 @@ app.post("/login", async (req, res, next) => {
 
           // Redirect to the verification page after login
           req.session.userEmail1 = req.body.email;
-          return res.redirect('/verify');
+
+          // Ensure you pass the productId as a query parameter if needed
+          return res.redirect(`/verify?productId=${req.body.productId}`);
       });
   })(req, res, next);
 });
 
 
 
+
 // Verification route
 app.get('/verify', checkAuthenticated, (req, res) => {
+  const productId = req.query.productId; // Get productId from the query
+
   if (req.isAuthenticated()) {
-      return res.render('verify'); // Render verification form if not verified
+      return res.render('verify', { productId }); // Pass productId to the verify page
   }
 
   // If the user is already verified, redirect them to another page
   if (req.isAuthenticated()) {
-      return res.render('em'); // Or any other page
+    return res.render('em', { productId }); // Direct to em if already verified
   }
 
   // If the user is not authenticated, redirect to login page
- res.render('emlogin');
+  res.render('emlogin');
 });
 
 // Handle verification code submission
@@ -345,9 +350,9 @@ app.post('/verify', async (req, res) => {
           // Optionally, you can delete the session data after successful verification
           delete req.session.verificationCode;
           delete req.session.userEmail;
-      
-          // Redirect to insighta.html or any other page after successful verification
-          return res.render('em');
+
+          // Redirect to the em page with productId
+          return res.redirect(`/em?productId=${req.body.productId}`);
       } catch (err) {
           console.error(err);
           return res.status(500).send('Server error');
@@ -358,12 +363,13 @@ app.post('/verify', async (req, res) => {
   }
 });
 
+app.get('/em', (req, res) => {
+  const productId = req.query.productId;  // Get productId from the URL query
 
-app.get('/em.ejs', (req, res) => {
   if (req.session.userEmail1) {
       if (req.session.isVerified) {
-          // User is logged in and verified, proceed to the page
-          return res.render('em');
+          // User is logged in and verified, pass productId to the template
+          return res.render('em', { productId });
       } else {
           // User is logged in but not verified, redirect to the verification page
           return res.render('verify');
@@ -376,10 +382,11 @@ app.get('/em.ejs', (req, res) => {
 // Redirect root to a new room
 // Redirect root to a new room (home page)
 app.get('/', (req, res) => {
+  const productId = req.query.productId;
   if (req.session.userEmail1) {
       if (req.session.isVerified) {
           // User is logged in and verified, show the main page
-          res.render('em');
+          return res.render('em', { productId });
       } else {
           // User is logged in but not verified, redirect to the verification page
           return res.render('verify');
@@ -639,3 +646,72 @@ app.get('/productpage', async (req, res) => {
 res.render('productpage')
 
 });
+
+
+
+// Assuming you're using the same route file
+const Order = require('./models/ordermodel');
+
+app.post('/orders', async (req, res) => {
+  console.log(req.user); // Log the user info to check if req.user is correct
+  const userId = req.user._id;
+  
+  if (!userId) {
+    return res.status(401).json({ success: false, message: 'Unauthorized access' });
+  }
+
+  try {
+    // Fetch orders for the logged-in vendor
+    const orders = await Order.find({ vendorId: userId }).populate('productId');
+    console.log('Fetched orders:', orders); // Debug the fetched orders
+
+    if (orders.length === 0) {
+      console.log('No orders found for this user.');
+    }
+
+    // Render the orders page
+    res.render('orders', { orders });
+  } catch (err) {
+    console.error('Error fetching orders:', err);
+    res.status(500).render('orders', { orders: [] });
+  }
+});
+
+
+
+
+
+// Example route to handle order creation
+app.post('/order/create', async (req, res) => {
+  try {
+    const orderDetails = req.body;
+
+    // Save the order with shipping information to the database (e.g., MongoDB)
+    const order = new Order({
+      productId: orderDetails.productId,
+      productName: orderDetails.productName,
+      price: orderDetails.price,
+      quantity: orderDetails.quantity,
+      vendorId: orderDetails.vendorId,
+      payerName: orderDetails.payerName,
+      payerEmail: orderDetails.payerEmail,
+      orderId: orderDetails.orderId,
+      shippingAddress: orderDetails.shippingAddress,
+      orderDate: new Date() 
+    });
+
+    await order.save(); // Save to the database
+
+    res.status(200).json({ success: true, message: 'Order placed successfully', order });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error placing order', error });
+  }
+});
+
+
+
+app.get('/enter-address', (req, res) => {
+  const productId = req.query.productId;  // Get productId from query
+  res.render('enter-address', { productId });  // Render the address entry page
+});
+module.exports = router;

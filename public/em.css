@@ -3063,3 +3063,98 @@ margin-top: -10px;
   .table th {
     background-color: #f1f1f1;
   }
+
+  form {
+    display: inline-block; /* Ensure the form behaves like an inline element */
+  }
+
+  /* Container for the form */
+#formz {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: block; /* Make it visible when needed */
+    
+    transition: opacity 0.3s ease-in-out;
+    z-index: 100;
+  }
+  
+  /* When the form is visible */
+
+  
+  /* Label Styling */
+  #formz label {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+  }
+  
+  /* Input and textarea styling */
+  #formz input[type="text"],
+  #formz input[type="email"],
+  #formz textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  /* Focus effect */
+  #formz input:focus,
+  #formz textarea:focus {
+    border-color: #007BFF;
+    outline: none;
+  }
+  
+  /* Submit Button Styling */
+  #formz button {
+    background-color: #007BFF;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Hover effect for the button */
+  #formz button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive Styling */
+  @media screen and (max-width: 768px) {
+    #formz {
+      padding: 15px;
+    }
+  
+    #formz label {
+      font-size: 1rem;
+    }
+  
+    #formz input[type="text"],
+    #formz input[type="email"],
+    #formz textarea {
+      font-size: 0.9rem;
+    }
+  
+    #formz button {
+      font-size: 1rem;
+      padding: 10px 18px;
+    }
+  }
+  
+
+.product-image {
+
+    width: 8%;
+    height: 20%;
+}
