@@ -42,12 +42,16 @@ HOME
     MESSAGES
     
 </button>
-
+<% if (isAllowed) { %>
+  <form action="/orders1" method="post">
 <button id = "btn8" class = "class2">
 
   LIST A PRODCUT
   
 </button>
+</form>
+<% } %>
+<% if (isAllowed) { %>
 <form action="/orders" method="post">
 <button type="submit" id = "btn4" class = "class2">
 
@@ -55,6 +59,7 @@ HOME
     
 </button>
 </form>
+<% } %>
 <button id = "btn5" class = "class2">
 
     BECOME A VENDOR
@@ -1023,7 +1028,7 @@ function renderDetailedProduct(product) {
         price: product.price,
         quantity: 1,
         vendorId: product.userId._id,
-        payerName: details.payer.name.given_name,
+        payerName: `${details.payer.name.given_name} ${details.payer.name.surname}`,
         payerEmail: details.payer.email_address,
         orderId: details.id,
         // Extract shipping address from PayPal details

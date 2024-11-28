@@ -18,7 +18,11 @@ const { body, validationResult } = require('express-validator');
 const stripe = require('stripe')('your-secret-key');
 app.use(express.static(path.join(__dirname, 'public')));
 const crypto = require('crypto');
-
+const allowedIds = [
+  '67484450b6e8966297fc6a17',
+  "673b5ba061083edcd6ba9089",
+  "673b5e9661083edcd6ba90bb"
+];
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -331,54 +335,88 @@ app.post('/verify', async (req, res) => {
 
   // Check if the verification code is valid
   if (code === req.session.verificationCode) {
-      try {
-          const userEmail = req.session.userEmail1;
+    try {
+      const userEmail = req.session.userEmail1;
 
-          // Find the user by email and update their isVerified field to true
-          const user = await User.findOne({ email: userEmail });
+      // Find the user by email
+      const user = await User.findOne({ email: userEmail });
 
-          if (!user) {
-              return res.status(404).send('User not found.');
-          }
-
-          // Update the isVerified field to true
-          req.session.isVerified = true;
-
-          // Save the user with the updated isVerified field
-          await user.save();
-
-          // Optionally, you can delete the session data after successful verification
-          delete req.session.verificationCode;
-          delete req.session.userEmail;
-
-          // Redirect to the em page with productId
-          return res.redirect(`/em?productId=${req.body.productId}`);
-      } catch (err) {
-          console.error(err);
-          return res.status(500).send('Server error');
+      if (!user) {
+        return res.status(404).send('User not found.');
       }
+
+      // Update the `isVerified` field to true
+      req.session.isVerified = true;
+
+      // Check if the user's `_id` is in the `allowedIds` array
+      const isAllowed = allowedIds.includes(user._id.toString());
+      req.session.isAllowed = isAllowed; // Store the result in the session
+
+      // Save the user with the updated `isVerified` field
+      await user.save();
+
+      // Clean up session data
+      delete req.session.verificationCode;
+      delete req.session.userEmail;
+
+      // Redirect to the `em` page with `productId`
+      return res.redirect(`/em?productId=${req.body.productId}`);
+    } catch (err) {
+      console.error(err);
+      return res.status(500).send('Server error');
+    }
   } else {
-      // If the verification code is incorrect, send an error message
-      res.send('Invalid verification code. Please try again.');
+    // If the verification code is incorrect, send an error message
+    return res.send('Invalid verification code. Please try again.');
   }
 });
 
-app.get('/em', (req, res) => {
-  const productId = req.query.productId;  // Get productId from the URL query
+app.get('/em', async (req, res) => {
+  const productId = req.query.productId;  // Get productId from the query string
 
-  if (req.session.userEmail1) {
-      if (req.session.isVerified) {
-          // User is logged in and verified, pass productId to the template
-          return res.render('em', { productId });
-      } else {
-          // User is logged in but not verified, redirect to the verification page
-          return res.render('verify');
-      }
-  } else {
-      // User is not authenticated, redirect to login
-      return res.render('emlogin');
+  // Check if the user is logged in
+  if (!req.user) {
+    // User is not authenticated, redirect to login
+    return res.render('emlogin', { message: "Please log in to access this page." });
+  }
+
+  // Check if the user is verified
+  if (!req.session.isVerified) {
+    // User is logged in but not verified, redirect to verification page
+    return res.render('verify', { message: "Please verify your account to proceed." });
+  }
+
+  try {
+    // Get the userId from req.user._id and convert it to string
+    const userId = req.user._id.toString(); // Convert ObjectId to string
+    console.log("User _id:", userId);  // Ensure this is the correct user ID (string format)
+
+    // Log allowed IDs for debugging
+    console.log("Allowed IDs:", allowedIds);  // Check the format of allowed IDs
+
+    // Log individual comparisons
+    allowedIds.forEach(id => {
+      console.log(`Comparing ${userId} to ${id}:`, userId === id);
+    });
+
+    // Check if the user is in the allowedIds array
+    const isAllowed = allowedIds.includes(userId); // Ensure allowedIds contains strings
+
+    // Log final result
+    console.log('Is Allowed:', isAllowed);
+
+    // Render the `em` page, passing the productId and isAllowed flag
+    return res.render('em', {
+      productId,
+      isAllowed, // This determines whether to show the special button
+    });
+  } catch (err) {
+    console.error("Error fetching user:", err);
+    return res.status(500).send("Server error. Please try again later.");
   }
 });
+
+
 // Redirect root to a new room
 // Redirect root to a new room (home page)
 app.get('/', (req, res) => {
@@ -679,8 +717,11 @@ app.post('/orders', async (req, res) => {
 
 
 
+app.post('/orders1', async (req, res) => {
 
+res.render('listproduct');
 
+});
 // Example route to handle order creation
 app.post('/order/create', async (req, res) => {
   try {
