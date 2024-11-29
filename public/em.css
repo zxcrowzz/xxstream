@@ -3184,6 +3184,8 @@ margin-top: -10px;
 position: absolute;
 
 left: 23%;
+
+width: 65%
 }
 #acidListing, #FakeIdListing, #BlackTar {
     width: 300px;
