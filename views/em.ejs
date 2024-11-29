@@ -197,26 +197,19 @@ HOME
 
 
 
-    <div id = "quickSearch">
-        <h2 id = "searrch">
-            Search:
-        </h2>
-        <input id = "searching">
-        
-        <button id = "confirmSearch">
+    <div id="quickSearch">
+    <h2 id="search">
+        Search:
+    </h2>
+    <input id="searching" placeholder="Enter username...">
+    <button id="confirmSearch">Search</button>
 
-            Search
-        </button>
-        <div id = "quicksearch1">
-
-            
-
-
-           <h2 id = "move2">QUICK SEARCH</h3>
-            
-
-        </div>
+    <!-- Results container -->
+    <div id="quicksearch1">
+        <h2 id="move2">QUICK SEARCH</h2>
+        <!-- Results will be dynamically added here -->
     </div>
+</div>
 
 
 
@@ -1199,6 +1192,47 @@ async function checkProductStock(productId, requestedQuantity) {
   }
 }
 
+document.getElementById('confirmSearch').addEventListener('click', async () => {
+    const query = document.getElementById('searching').value.trim();
+
+    // Ensure the query is not empty
+    if (!query) {
+        alert('Please enter a username to search!');
+        return;
+    }
+
+    // Make a search request to the backend
+    try {
+        const response = await fetch(`/search-users?q=${query}`);
+        if (!response.ok) throw new Error('Error fetching search results');
+        const results = await response.json();
+
+        const resultsContainer = document.getElementById('quicksearch1');
+        resultsContainer.innerHTML = '<h2 id="move2">QUICK SEARCH</h2>'; // Clear previous results but keep the title
+
+        if (results.length === 0) {
+            resultsContainer.innerHTML += '<p>No users found.</p>';
+            return;
+        }
+
+        // Add each user to the results container
+        results.forEach(user => {
+            const userDiv = document.createElement('div');
+            userDiv.style.cssText = 'display: flex; align-items: center; border: 1px solid #ccc; margin: 5px 0; padding: 10px; cursor: pointer;';
+            userDiv.innerHTML = `
+                <img src="${user.profileImage}" alt="${user.username}" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+                <span style="font-size: 16px; font-weight: bold;">${user.username}</span>
+            `;
+            userDiv.addEventListener('click', () => {
+                window.location.href = `/profile/${user._id}`; // Redirect to user's profile page
+            });
+            resultsContainer.appendChild(userDiv);
+        });
+    } catch (err) {
+        console.error('Search error:', err);
+        alert('Failed to fetch search results. Please try again later.');
+    }
+});
 
 
 </script>
