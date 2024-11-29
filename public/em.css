@@ -3243,29 +3243,5 @@ width: 79%
     }
 }
 
-#quicksearch1 div {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    margin: 5px 0;
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
 
-#quicksearch1 div:hover {
-    background-color: #f9f9f9;
-}
-
-#quicksearch1 img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-#quicksearch1 span {
-    font-size: 16px;
-    font-weight: bold;
-}
 
