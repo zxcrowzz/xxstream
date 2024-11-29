@@ -1071,104 +1071,55 @@ function renderDetailedProduct(product) {
       paypalButtonContainer.innerHTML = ''; // Clear the old button
 
       // Render the new PayPal button with the updated price and quantity
-      paypal.Buttons({
-        fundingSource: paypal.FUNDING.CARD,
-        createOrder: function (data, actions) {
-          return actions.order.create({
-            purchase_units: [{
-              amount: {
-                value: (product.price * quantityValue).toString() // Updated price
-              }
-            }]
-          });
-        },
-        onApprove: function (data, actions) {
-          return actions.order.capture().then(function (details) {
-            const orderDetails = {
-              productId: product._id,
-              productName: product.name,
-              price: product.price,
-              quantity: quantityValue,
-              vendorId: product.userId._id,
-              payerName: `${details.payer.name.given_name} ${details.payer.name.surname}`,
-              payerEmail: details.payer.email_address,
-              orderId: details.id,
-              shippingAddress: details.purchase_units[0].shipping.address
-            };
-
-            return fetch('/order/create', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(orderDetails)
-            })
-              .then(response => response.json())
-              .then(data => {
-                if (data.success) {
-                  alert('Order placed successfully!');
-                  window.location.href = '/em'; // Redirect after successful order
-                } else {
-                  alert('Error placing order: ' + data.message);
-                }
-              })
-              .catch(error => {
-                console.error("Error during order placement:", error);
-                alert("Failed to place the order. Please try again.");
-              });
-          });
+     paypal.Buttons({
+  createOrder: function (data, actions) {
+    console.log("Creating order...");
+    return actions.order.create({
+      purchase_units: [{
+        amount: {
+          value: (product.price * initialQuantityValue).toString()
         }
-      }).render('#paypal-button-container').then(function (button) {
-        currentPaypalButtonInstance = button; // Store the instance for future use
+      }]
+    });
+  },
+  onApprove: function (data, actions) {
+    console.log("Approving order...");
+    return actions.order.capture().then(function (details) {
+      console.log("Order captured: ", details);
+      const orderDetails = {
+        productId: product._id,
+        productName: product.name,
+        price: product.price,
+        quantity: initialQuantityValue,
+        vendorId: product.userId._id,
+        payerName: `${details.payer.name.given_name} ${details.payer.name.surname}`,
+        payerEmail: details.payer.email_address,
+        orderId: details.id,
+        shippingAddress: details.purchase_units[0].shipping.address
+      };
+
+      return fetch('/order/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderDetails)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Order creation response: ", data);
+        if (data.success) {
+          alert('Order placed successfully!');
+          window.location.href = '/em';
+        } else {
+          alert('Error placing order: ' + data.message);
+        }
+      })
+      .catch(error => {
+        console.error("Error during order placement:", error);
+        alert("Failed to place the order. Please try again.");
       });
     });
-
-    // Initial rendering of the PayPal button when the page loads
-    const initialQuantityValue = parseInt(quantityInput.value, 10);
-    paypal.Buttons({
-      fundingSource: paypal.FUNDING.CARD,
-      createOrder: function (data, actions) {
-        return actions.order.create({
-          purchase_units: [{
-            amount: {
-              value: (product.price * initialQuantityValue).toString()
-            }
-          }]
-        });
-      },
-      onApprove: function (data, actions) {
-        return actions.order.capture().then(function (details) {
-          const orderDetails = {
-            productId: product._id,
-            productName: product.name,
-            price: product.price,
-            quantity: initialQuantityValue,
-            vendorId: product.userId._id,
-            payerName: `${details.payer.name.given_name} ${details.payer.name.surname}`,
-            payerEmail: details.payer.email_address,
-            orderId: details.id,
-            shippingAddress: details.purchase_units[0].shipping.address
-          };
-
-          return fetch('/order/create', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(orderDetails)
-          })
-            .then(response => response.json())
-            .then(data => {
-              if (data.success) {
-                alert('Order placed successfully!');
-                window.location.href = '/em';
-              } else {
-                alert('Error placing order: ' + data.message);
-              }
-            })
-            .catch(error => {
-              console.error("Error during order placement:", error);
-              alert("Failed to place the order. Please try again.");
-            });
-        });
-      }
-    }).render('#paypal-button-container').then(function (button) {
+  }
+}).render('#paypal-button-container').then(function (button) {
       currentPaypalButtonInstance = button; // Store the instance for future use
     });
   }).catch(error => {
