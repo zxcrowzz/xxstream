@@ -1082,24 +1082,27 @@ function renderPaypalButton(product, quantityValue = 1) {
   paypalButtonContainer.innerHTML = ''; // Clear the old button
 
   // Render the new PayPal button with the updated price and quantity
-  paypal.Buttons({
-  createOrder: function (data, actions) {
+ paypal.Buttons({
+  createOrder: function(data, actions) {
     console.log("Creating order...");
     return actions.order.create({
       purchase_units: [{
         amount: {
-          value: (product.price * quantityValue).toString()
+          value: (product.price * quantityValue).toString()  // Make sure this amount is a valid number
         }
       }]
     }).then(function(orderData) {
-      console.log("Order created: ", orderData); // Log the order data
-      return orderData.id; // Ensure we are returning the order ID
+      console.log("Order created: ", orderData);  // Log order creation for debugging
+      return orderData.id;  // Return the order ID to PayPal to continue the flow
     });
   },
-  onApprove: function (data, actions) {
+
+  onApprove: function(data, actions) {
     console.log("Approving order...");
-    return actions.order.capture().then(function (details) {
+    return actions.order.capture().then(function(details) {
       console.log("Order captured: ", details);
+
+      // Gather order details
       const orderDetails = {
         productId: product._id,
         productName: product.name,
@@ -1108,10 +1111,11 @@ function renderPaypalButton(product, quantityValue = 1) {
         vendorId: product.userId._id,
         payerName: `${details.payer.name.given_name} ${details.payer.name.surname}`,
         payerEmail: details.payer.email_address,
-        orderId: details.id,
+        orderId: details.id,  // This is the captured order ID from PayPal
         shippingAddress: details.purchase_units[0].shipping.address
       };
 
+      // Send the order details to your backend to save it
       return fetch('/order/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1122,7 +1126,7 @@ function renderPaypalButton(product, quantityValue = 1) {
         console.log("Order creation response: ", data);
         if (data.success) {
           alert('Order placed successfully!');
-          window.location.href = '/em';
+          window.location.href = '/em';  // Redirect to order confirmation page
         } else {
           alert('Error placing order: ' + data.message);
         }
@@ -1133,7 +1137,8 @@ function renderPaypalButton(product, quantityValue = 1) {
       });
     });
   }
-}).render('#paypal-button-container').then(function (button) {
+}).render('#paypal-button-container');
+
   currentPaypalButtonInstance = button; // Store the instance for future use
   console.log("PayPal button rendered");
 });
