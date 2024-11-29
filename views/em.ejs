@@ -992,6 +992,8 @@ async function checkStockAvailability(productId) {
 
 
 
+let paypalButtonInstance = null; // Track the PayPal button instance
+
 function renderDetailedProduct(product) {
   const productContainer = document.getElementById('product-container');
   productContainer.innerHTML = '';
@@ -1024,7 +1026,6 @@ function renderDetailedProduct(product) {
       </tr>
     </table>
     <div class="buttons">
-      
     </div>
     <div class="description">
       <h3>Description</h3>
@@ -1049,6 +1050,11 @@ function renderDetailedProduct(product) {
     if (isNaN(quantityValue) || quantityValue <= 0) {
       alert("Please select a valid quantity.");
       return;
+    }
+
+    // Destroy previous PayPal button if it exists
+    if (paypalButtonInstance) {
+      paypalButtonInstance.close();
     }
 
     // Re-render PayPal button with updated price
@@ -1097,7 +1103,9 @@ function renderDetailedProduct(product) {
             });
         });
       }
-    }).render('.product-container');
+    }).render('.product-container').then(function(buttonInstance) {
+      paypalButtonInstance = buttonInstance; // Save the button instance
+    });
   };
 
   // Check stock before rendering PayPal button
