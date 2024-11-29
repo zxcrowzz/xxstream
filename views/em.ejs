@@ -994,8 +994,9 @@ async function checkStockAvailability(productId) {
 
 function renderDetailedProduct(product) {
   const productContainer = document.getElementById('product-container');
-  productContainer.innerHTML = '';
+  productContainer.innerHTML = ''; // Clear previous content
 
+  // Create the product details container
   const productDetail = document.createElement('div');
   productDetail.classList.add('product-container');
   productDetail.style.display = 'block';
@@ -1023,9 +1024,6 @@ function renderDetailedProduct(product) {
         <td>${product.features || 'NILL'}</td>
       </tr>
     </table>
-    <div class="buttons">
-      
-    </div>
     <div class="description">
       <h3>Description</h3>
       <p>${product.description}</p>
@@ -1039,7 +1037,7 @@ function renderDetailedProduct(product) {
 
   productContainer.appendChild(productDetail);
 
-  // Check stock before rendering PayPal button
+  // Check stock availability before rendering PayPal button
   checkStockAvailability(product._id).then(isStockAvailable => {
     if (!isStockAvailable) {
       alert('Insufficient stock. Please try again later.');
@@ -1103,13 +1101,11 @@ function renderDetailedProduct(product) {
             });
         });
       }
-    }).render('.product-container');
+    }).render('.product-container'); // Render the PayPal button inside the product container
   }).catch(error => {
     console.error("Error checking stock availability:", error);
   });
 }
-
-
 
 
 
