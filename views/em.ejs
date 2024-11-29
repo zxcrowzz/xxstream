@@ -992,7 +992,7 @@ async function checkStockAvailability(productId) {
 
 
 
-let paypalButtonInstance = null; // Track the PayPal button instance
+let currentPaypalButtonInstance = null; // Store the current PayPal button instance
 
 function renderDetailedProduct(product) {
   const productContainer = document.getElementById('product-container');
@@ -1061,6 +1061,11 @@ function renderDetailedProduct(product) {
         return;
       }
 
+      // Destroy the existing PayPal button if it exists
+      if (currentPaypalButtonInstance) {
+        currentPaypalButtonInstance.close(); // Close or destroy the current button
+      }
+
       // Remove old PayPal button (if it exists)
       const paypalButtonContainer = document.getElementById('paypal-button-container');
       paypalButtonContainer.innerHTML = ''; // Clear the old button
@@ -1111,7 +1116,9 @@ function renderDetailedProduct(product) {
               });
           });
         }
-      }).render('#paypal-button-container'); // Render to the specific container
+      }).render('#paypal-button-container').then(function (button) {
+        currentPaypalButtonInstance = button; // Store the instance for future use
+      });
     });
 
     // Initial rendering of the PayPal button when the page loads
@@ -1161,11 +1168,14 @@ function renderDetailedProduct(product) {
             });
         });
       }
-    }).render('#paypal-button-container');
+    }).render('#paypal-button-container').then(function (button) {
+      currentPaypalButtonInstance = button; // Store the instance for future use
+    });
   }).catch(error => {
     console.error("Error checking stock availability:", error);
   });
 }
+
 
 
 
