@@ -995,7 +995,7 @@ async function checkStockAvailability(productId) {
 
 function renderDetailedProduct(product) {
   const productContainer = document.getElementById('product-container');
-  productContainer.innerHTML = ''; // Clear any existing product details
+  productContainer.innerHTML = '';
 
   const productDetail = document.createElement('div');
   productDetail.classList.add('product-container');
@@ -1024,8 +1024,8 @@ function renderDetailedProduct(product) {
         <td>${product.features || 'NILL'}</td>
       </tr>
     </table>
-    <div class="buttons">
-      <div id="paypal-button-container"></div> <!-- Add a container for the PayPal button -->
+    <div class="buttons" id="paypal-button-container">
+      <!-- PayPal button will be rendered here -->
     </div>
     <div class="description">
       <h3>Description</h3>
@@ -1048,98 +1048,83 @@ function renderDetailedProduct(product) {
     }
 
     console.log('Stock is available, rendering PayPal button');
-    renderPaypalButton(product); // Call to render the PayPal button
+
+    // Render the PayPal button
+    function renderPaypalButton() {
+      // Remove existing PayPal button if it exists
+      const existingButton = document.getElementById('paypal-button-container').querySelector('.paypal-button');
+      if (existingButton) {
+        existingButton.remove();
+      }
+
+      paypal.Buttons({
+        fundingSource: paypal.FUNDING.CARD,
+        createOrder: function (data, actions) {
+          const quantityInput = document.getElementById(`quantity-${product._id}`);
+          const quantityValue = parseInt(quantityInput.value, 10);
+
+          if (isNaN(quantityValue) || quantityValue <= 0) {
+            alert("Please select a valid quantity.");
+            return;
+          }
+
+          return actions.order.create({
+            purchase_units: [{
+              amount: { value: (product.price * quantityValue).toString() }
+            }]
+          });
+        },
+        onApprove: function (data, actions) {
+          const quantityInput = document.getElementById(`quantity-${product._id}`);
+          const quantityValue = parseInt(quantityInput.value, 10);
+
+          return actions.order.capture().then(function (details) {
+            const orderDetails = {
+              productId: product._id,
+              productName: product.name,
+              price: product.price,
+              quantity: quantityValue,
+              vendorId: product.userId._id,
+              payerName: `${details.payer.name.given_name} ${details.payer.name.surname}`,
+              payerEmail: details.payer.email_address,
+              orderId: details.id,
+              shippingAddress: details.purchase_units[0].shipping.address
+            };
+
+            return fetch('/order/create', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(orderDetails)
+            })
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  alert('Order placed successfully!');
+                  window.location.href = '/em';
+                } else {
+                  alert('Error placing order: ' + data.message);
+                }
+              })
+              .catch(error => {
+                console.error("Error during order placement:", error);
+                alert("Failed to place the order. Please try again.");
+              });
+          });
+        }
+      }).render('#paypal-button-container');
+    }
+
+    // Initial rendering of PayPal button
+    renderPaypalButton();
+
+    // Listen for changes in quantity and re-render PayPal button with updated price
+    const quantityInput = document.getElementById(`quantity-${product._id}`);
+    quantityInput.addEventListener('input', function () {
+      renderPaypalButton(); // Re-render PayPal button when quantity changes
+    });
+
   }).catch(error => {
     console.error("Error checking stock availability:", error);
-  });
-
-  // Listen for quantity changes and re-render the PayPal button
-  const quantityInput = document.getElementById(`quantity-${product._id}`);
-  quantityInput.addEventListener('input', function () {
-    const quantityValue = parseInt(quantityInput.value, 10);
-
-    // Check that the quantity is valid
-    if (isNaN(quantityValue) || quantityValue <= 0 || quantityValue > product.quantity) {
-      alert("Please select a valid quantity.");
-      return;
-    }
-
-    // Re-render the PayPal button with updated price and quantity
-    renderPaypalButton(product, quantityValue);
-  });
-}
-
-let currentPaypalButtonInstance = null; // Store PayPal button instance
-
-function renderPaypalButton(product, quantityValue = 1) {
-  // Destroy the existing PayPal button if it exists
-  if (currentPaypalButtonInstance) {
-    currentPaypalButtonInstance.close(); // Close or destroy the current button
-  }
-
-  // Remove old PayPal button (if it exists)
-  const paypalButtonContainer = document.getElementById('paypal-button-container');
-  paypalButtonContainer.innerHTML = ''; // Clear the old button
-
-  // Render the new PayPal button with the updated price and quantity
-  paypal.Buttons({
-    createOrder: function(data, actions) {
-      console.log("Creating order...");
-      return actions.order.create({
-        purchase_units: [{
-          amount: {
-            value: (product.price * quantityValue).toString()  // Make sure this amount is a valid number
-          }
-        }]
-      }).then(function(orderData) {
-        console.log("Order created: ", orderData);  // Log order creation for debugging
-        return orderData.id;  // Return the order ID to PayPal to continue the flow
-      });
-    },
-
-    onApprove: function(data, actions) {
-      console.log("Approving order...");
-      return actions.order.capture().then(function(details) {
-        console.log("Order captured: ", details);
-
-        // Gather order details
-        const orderDetails = {
-          productId: product._id,
-          productName: product.name,
-          price: product.price,
-          quantity: quantityValue,
-          vendorId: product.userId._id,
-          payerName: `${details.payer.name.given_name} ${details.payer.name.surname}`,
-          payerEmail: details.payer.email_address,
-          orderId: details.id,  // This is the captured order ID from PayPal
-          shippingAddress: details.purchase_units[0].shipping.address
-        };
-
-        // Send the order details to your backend to save it
-        return fetch('/order/create', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(orderDetails)
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log("Order creation response: ", data);
-          if (data.success) {
-            alert('Order placed successfully!');
-            window.location.href = '/em';  // Redirect to order confirmation page
-          } else {
-            alert('Error placing order: ' + data.message);
-          }
-        })
-        .catch(error => {
-          console.error("Error during order placement:", error);
-          alert("Failed to place the order. Please try again.");
-        });
-      });
-    }
-  }).render('#paypal-button-container').then(function(button) {
-    currentPaypalButtonInstance = button; // Store the instance for future use
-    console.log("PayPal button rendered");
   });
 }
 
