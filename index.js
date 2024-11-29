@@ -866,4 +866,28 @@ process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled promise rejection:', reason);
   process.exit(1); // Exit with a failure code
 });
+app.get('/search-users', async (req, res) => {
+    const searchQuery = req.query.q; // Get the search term from the query params
+    try {
+        const users = await User.find(
+            { username: { $regex: searchQuery, $options: 'i' } },
+            { username: 1, profileImage: 1 }
+        ); // Fetch username and profileImage only
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(500).json({ error: 'An error occurred' });
+    }
+});
+
+
+app.get('/user/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) return res.status(404).json({ error: 'User not found' });
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json({ error: 'An error occurred' });
+    }
+});
+
 module.exports = router;
