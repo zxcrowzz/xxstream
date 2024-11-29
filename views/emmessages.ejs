@@ -25,13 +25,13 @@ Logged in as<p>Current Balance</p>
 
 
 <div id = "navbar">
-
+<a href="/em">
 <button id = "btn1" class = "class2">
 
 HOME
 
 </button>
-
+</a>
 
 
 <button id = "btn2" class = "class2">
@@ -137,4 +137,12 @@ HOME
    
     <button id = "sendChatBtn"></button>
     <input id = "inputcntr">
+
+
+
+    <script>
+        document.getElementById('btn1').addEventListener('click', () => {
+            window.location.href = '/em'; // Redirect to the home page
+        });
+      </script>
 </html>

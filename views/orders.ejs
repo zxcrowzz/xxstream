@@ -92,7 +92,9 @@
   </div>
 
   <div id="navbar">
+    <a href="/em">
     <button id="btn1" class="class2">HOME</button>
+  </a>
     <button id="btn2" class="class2">SALES</button>
     <button id="btn3" class="class2">MESSAGES</button>
     <button id="btn8" class="class2">LIST A PRODUCT</button>
@@ -140,4 +142,9 @@
     </tbody>
   </table>
 </body>
+<script>
+  document.getElementById('btn1').addEventListener('click', () => {
+      window.location.href = '/em'; // Redirect to the home page
+  });
+</script>
 </html>

@@ -419,21 +419,41 @@ app.get('/em', async (req, res) => {
 
 // Redirect root to a new room
 // Redirect root to a new room (home page)
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   const productId = req.query.productId;
+
   if (req.session.userEmail1) {
       if (req.session.isVerified) {
-          // User is logged in and verified, show the main page
-          return res.render('em', { productId });
+          try {
+              // Get user ID from session or database
+              const userId = req.user._id.toString();  // Assuming you have a user object attached to session
+
+              // Check if the user is in the allowedIds array
+              const isAllowed = allowedIds.includes(userId); 
+
+              // Log for debugging purposes
+              console.log('Is Allowed:', isAllowed);
+
+              // Render the `em` page and pass `productId` and `isAllowed`
+              return res.render('em', { 
+                  productId,
+                  isAllowed, // This will control whether the special button/content shows up
+              });
+
+          } catch (err) {
+              console.error("Error checking user permissions:", err);
+              return res.status(500).send('Server error');
+          }
       } else {
           // User is logged in but not verified, redirect to the verification page
-          return res.render('verify');
+          return res.render('verify', { message: "Please verify your account to proceed." });
       }
   } else {
       // User is not logged in, redirect to login
-      return res.render('emlogin');
+      return res.render('emlogin', { message: "Please log in to access this page." });
   }
 });
+
 
 
 app.post('/redirect', (req, res) => {
@@ -559,8 +579,10 @@ const productSchema = new mongoose.Schema({
   category: String,
   imageUrl: String,
   createdAt: { type: Date, default: Date.now },
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true } // Reference to User schema
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  quantity: { type: Number, required: true, default: 1 } // New quantity field
 });
+
 const Product = mongoose.model('Product', productSchema);
 
 
@@ -568,7 +590,7 @@ const Product = mongoose.model('Product', productSchema);
 app.post('/submit-product', upload1.single('productImage'), async (req, res) => {
   try {
     const userId = req.user._id; // Replace with proper authentication middleware
-    const { productName, productDescription, productPrice, productCategory } = req.body;
+    const { productName, productDescription, productPrice, productCategory , productQuantity} = req.body;
 
     // Ensure file exists
     if (!req.file) throw new Error('No file uploaded');
@@ -594,8 +616,10 @@ app.post('/submit-product', upload1.single('productImage'), async (req, res) => 
       price: productPrice,
       category: productCategory,
       imageUrl, // Save the image URL
-      userId,
+      userId,   // Associate the product with the user
+      quantity: productQuantity, // Add quantity here
     });
+    
     await newProduct.save();
 
     res.status(200).send({ message: 'Product saved successfully!', product: newProduct });
@@ -696,35 +720,122 @@ res.render('listproduct');
 });
 // Example route to handle order creation
 app.post('/order/create', async (req, res) => {
-  try {
-    const orderDetails = req.body;
+  // Log the incoming request data
+  console.log("Received order request:", req.body);
 
-    // Save the order with shipping information to the database (e.g., MongoDB)
+  // Destructure the fields from the request body
+  const { 
+    productId, productName, price, quantity, vendorId, 
+    payerName, payerEmail, orderId, shippingAddress 
+  } = req.body;
+
+  // Validate if all required fields are present
+  if (!productId || !productName || !price || !quantity || !vendorId || !payerName || !payerEmail || !orderId || !shippingAddress) {
+    console.error("Missing required fields");
+    return res.status(400).json({ 
+      success: false, 
+      message: 'Missing required fields' 
+    });
+  }
+
+  try {
+    // Log order details before database interaction
+    console.log("Order details before database save:", req.body);
+
+    // Step 1: Fetch the product to check its stock
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      console.error("Product not found");
+      return res.status(404).json({ success: false, message: 'Product not found' });
+    }
+
+    // Step 2: Check if product has enough stock
+    if (product.quantity < 1) {
+      console.error("Product is out of stock");
+      return res.status(400).json({ success: false, message: 'Product is out of stock' });
+    }
+
+    // Step 3: Decrease the product's quantity by 1
+    product.quantity -= quantity;
+
+    // Save the updated product document
+    await product.save();
+
+    // Step 4: Create the order and save it
     const order = new Order({
-      productId: orderDetails.productId,
-      productName: orderDetails.productName,
-      price: orderDetails.price,
-      quantity: orderDetails.quantity,
-      vendorId: orderDetails.vendorId,
-      payerName: orderDetails.payerName,
-      payerEmail: orderDetails.payerEmail,
-      orderId: orderDetails.orderId,
-      shippingAddress: orderDetails.shippingAddress,
-      orderDate: new Date() 
+      productId,
+      productName,
+      price,
+      quantity,
+      vendorId,
+      payerName,
+      payerEmail,
+      orderId,
+      shippingAddress,
+      orderDate: new Date(),
     });
 
-    await order.save(); // Save to the database
+    await order.save(); // Save the order to the database
 
+    // Log successful order save
+    console.log("Order saved successfully:", order);
+
+    // Respond with success
     res.status(200).json({ success: true, message: 'Order placed successfully', order });
   } catch (error) {
+    // Log any error that occurs
+    console.error("Error placing order:", error);
     res.status(500).json({ success: false, message: 'Error placing order', error });
   }
 });
 
 
 
-app.get('/enter-address', (req, res) => {
-  const productId = req.query.productId;  // Get productId from query
-  res.render('enter-address', { productId });  // Render the address entry page
+
+
+
+
+
+app.post('/order/validate-quantity', async (req, res) => {
+  const { productId, requestedQuantity } = req.body;
+
+  try {
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(404).json({ success: false, message: 'Product not found.' });
+    }
+
+    if (requestedQuantity > product.quantity) {
+      return res.status(400).json({
+        success: false,
+        message: `Only ${product.quantity} items available.`,
+      });
+    }
+
+    // Pass validation
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Server error.' });
+  }
+});
+app.get('/product/stock/:id', async (req, res) => {
+  const product = await Product.findById(req.params.id);
+  if (!product) {
+    return res.status(404).json({ message: 'Product not found' });
+  }
+  res.status(200).json({ quantity: product.quantity });
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught exception:', err);
+  process.exit(1); // Exit with a failure code
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled promise rejection:', reason);
+  process.exit(1); // Exit with a failure code
 });
 module.exports = router;
