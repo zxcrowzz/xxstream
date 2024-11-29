@@ -22,13 +22,13 @@ Logged in as<p>Current Balance</p>
 
 
 <div id = "navbar">
- 
+  <a href="/em">
 <button id = "btn1" class = "class2">
 
 HOME
 
 </button>
-
+</a>
 
 
 <button id = "btn2" class = "class2">
@@ -139,7 +139,7 @@ HOME
 
   
   <div id = "product-container" style="display: none;"></div>
-  <h1 id = "heyman">Server Time:</h1>
+  
   <div id="time">Loading...</div>
     <div id = "noticeBar">
       
@@ -943,7 +943,7 @@ document.querySelectorAll('.clickme').forEach((summary) => {
           productItem.classList.add('product-item');
           productItem.innerHTML = ` 
             <div class="product" data-id="${product._id}">
-              <img src="${product.imageUrl}" alt="${product.name}" id = "heyf">
+              <img src="${product.imageUrl}" alt="${product.name}" id="heyf">
               <h4 id="eey3">${product.name}</h4>
               <p id="desc">${product.description}</p>
               <p id="price">Price: $${product.price}</p>
@@ -965,6 +965,33 @@ document.querySelectorAll('.clickme').forEach((summary) => {
   });
 });
 
+async function checkStockAvailability(productId) {
+  console.log('Product ID:', productId); // Log the product ID
+
+  if (!productId) {
+    console.error('Product ID is undefined');
+    return false;
+  }
+
+  try {
+    // Update the URL to match the server route
+    const response = await fetch(`/product/stock/${productId}`);
+
+    if (!response.ok) {
+      throw new Error('Stock check failed');
+    }
+
+    const result = await response.json();
+    console.log('Stock check response:', result);
+    return result.quantity > 0; // Adjust according to your response format
+  } catch (error) {
+    console.error('Error checking stock:', error);
+    return false;
+  }
+}
+
+
+
 function renderDetailedProduct(product) {
   const productContainer = document.getElementById('product-container');
   productContainer.innerHTML = '';
@@ -978,7 +1005,7 @@ function renderDetailedProduct(product) {
       <div class="details">
         <h2>${product.name}</h2>
         <p>Sold by ${product.userId?.name || 'Unknown User'} | Vendor Level 3 | Trust Level 1</p>
-        <p>${product.quantity || '100'} items left | Ships to: United States</p>
+        <p>${product.quantity || '0'} items left | Ships to: United States</p>
         <p>USD $${product.price}</p>
       </div>
     </div>
@@ -997,69 +1024,91 @@ function renderDetailedProduct(product) {
       </tr>
     </table>
     <div class="buttons">
-      <button class="buy-now">Buy Now</button>
-      <button class="queue">Queue</button>
+      
     </div>
     <div class="description">
       <h3>Description</h3>
       <p>${product.description}</p>
     </div>
+
+    <div class="quantity-selector">
+      <label for="quantity-${product._id}">Select Quantity:</label>
+      <input type="number" id="quantity-${product._id}" name="quantity" min="1" max="${product.quantity}" value="1">
+    </div>
   `;
 
   productContainer.appendChild(productDetail);
 
-  // PayPal Button for product purchase
-  paypal.Buttons({
-  createOrder: function(data, actions) {
-    return actions.order.create({
-      purchase_units: [{
-        amount: {
-          value: product.price.toString() // Set the amount dynamically
-        },
-        
-      }]
-    });
-  },
-  onApprove: function(data, actions) {
-    return actions.order.capture().then(function(details) {
-      const orderDetails = {
-        productId: product._id,
-        productName: product.name,
-        price: product.price,
-        quantity: 1,
-        vendorId: product.userId._id,
-        payerName: `${details.payer.name.given_name} ${details.payer.name.surname}`,
-        payerEmail: details.payer.email_address,
-        orderId: details.id,
-        // Extract shipping address from PayPal details
-        shippingAddress: details.purchase_units[0].shipping.address
-      };
+  // Check stock before rendering PayPal button
+  checkStockAvailability(product._id).then(isStockAvailable => {
+    if (!isStockAvailable) {
+      alert('Insufficient stock. Please try again later.');
+      return; // Don't render the PayPal button if stock is unavailable
+    }
 
-      // Send the order details including the shipping address to your backend
-      fetch('/order/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(orderDetails)
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          alert('Order placed successfully!');
-          window.location.href = '/orders';
-        } else {
-          alert('Error placing order: ' + data.message);
+    console.log('Stock is available, rendering PayPal button');
+
+    // Render the PayPal button
+    paypal.Buttons({
+      fundingSource: paypal.FUNDING.CARD,
+      createOrder: function (data, actions) {
+        const quantityInput = document.getElementById(`quantity-${product._id}`);
+        const quantityValue = parseInt(quantityInput.value, 10);
+
+        if (isNaN(quantityValue) || quantityValue <= 0) {
+          alert("Please select a valid quantity.");
+          return;
         }
-      })
-      .catch(err => {
-        console.error('Error:', err);
-        alert('Failed to place the order');
-      });
-    });
-  }
-}).render('.product-container');
+
+        return actions.order.create({
+          purchase_units: [{
+            amount: { value: (product.price * quantityValue).toString() }
+          }]
+        });
+      },
+      onApprove: function (data, actions) {
+        const quantityInput = document.getElementById(`quantity-${product._id}`);
+        const quantityValue = parseInt(quantityInput.value, 10);
+        
+        return actions.order.capture().then(function (details) {
+          const orderDetails = {
+            productId: product._id,
+            productName: product.name,
+            price: product.price,
+            quantity: quantityValue,
+            vendorId: product.userId._id,
+            payerName: `${details.payer.name.given_name} ${details.payer.name.surname}`,
+            payerEmail: details.payer.email_address,
+            orderId: details.id,
+            shippingAddress: details.purchase_units[0].shipping.address
+          };
+
+          return fetch('/order/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderDetails)
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                alert('Order placed successfully!');
+                window.location.href = '/em';
+              } else {
+                alert('Error placing order: ' + data.message);
+              }
+            })
+            .catch(error => {
+              console.error("Error during order placement:", error);
+              alert("Failed to place the order. Please try again.");
+            });
+        });
+      }
+    }).render('.product-container');
+  }).catch(error => {
+    console.error("Error checking stock availability:", error);
+  });
 }
+
 
 
 
@@ -1120,6 +1169,25 @@ document.getElementById('Logoutbtn').addEventListener('click', async () => {
 
 
 
+async function checkProductStock(productId, requestedQuantity) {
+  try {
+    const response = await fetch(`/product/stock/${productId}`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch stock: ${response.status}`);
+    }
+
+    const product = await response.json();
+    if (product.quantity < requestedQuantity) {
+      return false; // Insufficient stock
+    }
+
+    return true; // Sufficient stock
+  } catch (error) {
+    console.error("Error checking product stock:", error);
+    return false; // Default to insufficient stock on error
+  }
+}
+
 
 
 </script>
@@ -1130,6 +1198,10 @@ document.getElementById('Logoutbtn').addEventListener('click', async () => {
 
 <script src="https://www.paypal.com/sdk/js?client-id=AU0cVDF6YEaTIHqGnL819YVXDyJ1msfskbiRl8CzKC-PgzvzGiLoB6hOwQPfQzOlUsCpqlJ6f-q4F1Rz&components=buttons"></script>
 
-
+<script>
+  document.getElementById('btn1').addEventListener('click', () => {
+      window.location.href = '/em'; // Redirect to the home page
+  });
+</script>
   
 </html>

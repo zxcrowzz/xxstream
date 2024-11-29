@@ -22,13 +22,13 @@ Logged in as<p>Current Balance</p>
 
 
 <div id = "navbar">
- 
+    <a href="/em">
 <button id = "btn1" class = "class2">
 
 HOME
 
 </button>
-
+    </a>
 
 
 <button id = "btn2" class = "class2">
@@ -158,6 +158,8 @@ HOME
             <div class="product-form-group">
                 <label for="productImage">Upload Image</label>
                 <input type="file" id="productImage" name="productImage" accept="image/*" required>
+                <label for="productQuantity">Quantity</label>
+                <input type="number" id="productQuantity" name="productQuantity" min="1" required>
             </div>
             <button type="submit">List Product</button>
         </form>
@@ -188,4 +190,10 @@ HOME
 
 
 </div>
+
+<script>
+    document.getElementById('btn1').addEventListener('click', () => {
+        window.location.href = '/em'; // Redirect to the home page
+    });
+  </script>
 </html>

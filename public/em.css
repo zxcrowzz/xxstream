@@ -3158,3 +3158,22 @@ margin-top: -10px;
     width: 8%;
     height: 20%;
 }
+
+.quantity-selector {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .quantity-selector label {
+    margin-right: 8px;
+    font-weight: bold;
+  }
+  
+  .quantity-selector input {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
