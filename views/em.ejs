@@ -996,7 +996,7 @@ let paypalButtonInstance = null; // Track the PayPal button instance
 
 function renderDetailedProduct(product) {
   const productContainer = document.getElementById('product-container');
-  productContainer.innerHTML = '';
+  productContainer.innerHTML = ''; // Clear any existing product details
 
   const productDetail = document.createElement('div');
   productDetail.classList.add('product-container');
@@ -1026,6 +1026,7 @@ function renderDetailedProduct(product) {
       </tr>
     </table>
     <div class="buttons">
+      <div id="paypal-button-container"></div> <!-- Add a container for the PayPal button -->
     </div>
     <div class="description">
       <h3>Description</h3>
@@ -1040,42 +1041,99 @@ function renderDetailedProduct(product) {
 
   productContainer.appendChild(productDetail);
 
-  // Quantity input field
-  const quantityInput = document.getElementById(`quantity-${product._id}`);
-
-  // Function to update PayPal button when quantity changes
-  const updatePayPalButton = () => {
-    const quantityValue = parseInt(quantityInput.value, 10);
-
-    if (isNaN(quantityValue) || quantityValue <= 0) {
-      alert("Please select a valid quantity.");
-      return;
+  // Check stock before rendering PayPal button
+  checkStockAvailability(product._id).then(isStockAvailable => {
+    if (!isStockAvailable) {
+      alert('Insufficient stock. Please try again later.');
+      return; // Don't render the PayPal button if stock is unavailable
     }
 
-    // Destroy previous PayPal button if it exists
-    if (paypalButtonInstance) {
-      paypalButtonInstance.close();
-    }
+    console.log('Stock is available, rendering PayPal button');
 
-    // Re-render PayPal button with updated price
+    // Listen for quantity changes and re-render the PayPal button
+    const quantityInput = document.getElementById(`quantity-${product._id}`);
+    quantityInput.addEventListener('input', function () {
+      const quantityValue = parseInt(quantityInput.value, 10);
+
+      // Check that the quantity is valid
+      if (isNaN(quantityValue) || quantityValue <= 0 || quantityValue > product.quantity) {
+        alert("Please select a valid quantity.");
+        return;
+      }
+
+      // Remove old PayPal button (if it exists)
+      const paypalButtonContainer = document.getElementById('paypal-button-container');
+      paypalButtonContainer.innerHTML = ''; // Clear the old button
+
+      // Render the new PayPal button with the updated price and quantity
+      paypal.Buttons({
+        fundingSource: paypal.FUNDING.CARD,
+        createOrder: function (data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: (product.price * quantityValue).toString() // Updated price
+              }
+            }]
+          });
+        },
+        onApprove: function (data, actions) {
+          return actions.order.capture().then(function (details) {
+            const orderDetails = {
+              productId: product._id,
+              productName: product.name,
+              price: product.price,
+              quantity: quantityValue,
+              vendorId: product.userId._id,
+              payerName: `${details.payer.name.given_name} ${details.payer.name.surname}`,
+              payerEmail: details.payer.email_address,
+              orderId: details.id,
+              shippingAddress: details.purchase_units[0].shipping.address
+            };
+
+            return fetch('/order/create', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(orderDetails)
+            })
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  alert('Order placed successfully!');
+                  window.location.href = '/em'; // Redirect after successful order
+                } else {
+                  alert('Error placing order: ' + data.message);
+                }
+              })
+              .catch(error => {
+                console.error("Error during order placement:", error);
+                alert("Failed to place the order. Please try again.");
+              });
+          });
+        }
+      }).render('#paypal-button-container'); // Render to the specific container
+    });
+
+    // Initial rendering of the PayPal button when the page loads
+    const initialQuantityValue = parseInt(quantityInput.value, 10);
     paypal.Buttons({
       fundingSource: paypal.FUNDING.CARD,
       createOrder: function (data, actions) {
         return actions.order.create({
           purchase_units: [{
-            amount: { value: (product.price * quantityValue).toString() }
+            amount: {
+              value: (product.price * initialQuantityValue).toString()
+            }
           }]
         });
       },
       onApprove: function (data, actions) {
-        const quantityValue = parseInt(quantityInput.value, 10);
-        
         return actions.order.capture().then(function (details) {
           const orderDetails = {
             productId: product._id,
             productName: product.name,
             price: product.price,
-            quantity: quantityValue,
+            quantity: initialQuantityValue,
             vendorId: product.userId._id,
             payerName: `${details.payer.name.given_name} ${details.payer.name.surname}`,
             payerEmail: details.payer.email_address,
@@ -1103,26 +1161,12 @@ function renderDetailedProduct(product) {
             });
         });
       }
-    }).render('.product-container').then(function(buttonInstance) {
-      paypalButtonInstance = buttonInstance; // Save the button instance
-    });
-  };
-
-  // Check stock before rendering PayPal button
-  checkStockAvailability(product._id).then(isStockAvailable => {
-    if (!isStockAvailable) {
-      alert('Insufficient stock. Please try again later.');
-      return; // Don't render the PayPal button if stock is unavailable
-    }
-
-    console.log('Stock is available, rendering PayPal button');
-    updatePayPalButton();  // Initial PayPal button render
-
-    // Listen for quantity changes
-    quantityInput.addEventListener('input', updatePayPalButton);
+    }).render('#paypal-button-container');
   }).catch(error => {
     console.error("Error checking stock availability:", error);
   });
+}
+
 }
 
 
