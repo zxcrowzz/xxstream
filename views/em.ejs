@@ -1052,10 +1052,11 @@ function renderDetailedProduct(product) {
     // Render the PayPal button
     function renderPaypalButton() {
       // Remove existing PayPal button if it exists
-      const existingButton = document.getElementById('paypal-button-container').querySelector('.paypal-button');
-      if (existingButton) {
-        existingButton.remove();
-      }
+    const existingButton = document.getElementById('paypal-button-container');
+if (existingButton) {
+  existingButton.innerHTML = "";  // Clears the content inside the container
+}
+
 
       paypal.Buttons({
         fundingSource: paypal.FUNDING.CARD,
