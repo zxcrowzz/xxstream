@@ -1332,8 +1332,11 @@ async function checkProductStock(productId, requestedQuantity) {
 // Function to fetch and render detailed product view
 document.getElementById("srchbtn").addEventListener('click', async () => {
   const searchTerm = document.getElementById("hello").value;
+  const allChecked = document.querySelector('input[name="all"]').checked;
+  const digitalChecked = document.querySelector('input[name="digital"]').checked;
+  const physicalChecked = document.querySelector('input[name="physical"]').checked;
+  const autoDispatchChecked = document.querySelector('input[name="autoDispatch"]').checked;
 
-  // Get filter values
   const priceFrom = document.getElementById("priceFrom").value;
   const priceTo = document.getElementById("priceTo").value;
   const category = document.getElementById("priceTo1").value;
@@ -1356,6 +1359,10 @@ document.getElementById("srchbtn").addEventListener('click', async () => {
       body: JSON.stringify({
         searchTerm,
         filters: {
+          allChecked,
+          digitalChecked,
+          physicalChecked,
+          autoDispatchChecked,
           priceFrom,
           priceTo,
           category,
@@ -1391,8 +1398,7 @@ document.getElementById("srchbtn").addEventListener('click', async () => {
           </div>
         `;
 
-        // Add click event to fetch product details for the clicked product
-        productItem.addEventListener('click', () => fetchProductDetails(product._id));
+        productItem.addEventListener('click', () => renderDetailedProduct(product));
         productContainer.appendChild(productItem);
       });
     }
@@ -1400,6 +1406,7 @@ document.getElementById("srchbtn").addEventListener('click', async () => {
     console.error('Error loading products:', error);
   }
 });
+
 
 // Function to fetch product details when a product is clicked
 async function fetchProductDetails(productId) {
