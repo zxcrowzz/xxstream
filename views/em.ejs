@@ -1331,6 +1331,7 @@ async function checkProductStock(productId, requestedQuantity) {
 
 // Function to fetch and render detailed product view
 document.getElementById("srchbtn").addEventListener('click', async () => {
+
   const searchTerm = document.getElementById("hello").value;
 
 
@@ -1347,6 +1348,7 @@ document.getElementById("srchbtn").addEventListener('click', async () => {
   const vendorTrustLevel = document.getElementById("priceFrom01").value;
 
   const productContainer = document.getElementById('product-container');
+productContainer.style.display = "block";
   productContainer.innerHTML = ''; // Clear existing products
 
   try {
