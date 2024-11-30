@@ -715,67 +715,6 @@ res.render('productpage')
 
 });
 
-app.get('/search-products', async (req, res) => {
-  const {
-    searchTerm,
-    price,
-    category,
-    originCountry,
-    shipsTo,
-    inStock,
-    paymentMethod,
-    coin,
-    verified,
-    vendorTrustLevel
-  } = req.query;
-
-  // Build filter object dynamically
-  let filters = {};
-
-  if (searchTerm) {
-    filters.name = { $regex: searchTerm, $options: 'i' }; // Case-insensitive search
-  }
-  if (price) {
-    filters.price = JSON.parse(price); // Assuming price is in a range object like { $gte: 10, $lte: 100 }
-  }
-  if (category) {
-    filters.category = category;
-  }
-  if (originCountry) {
-    filters.originCountry = originCountry;
-  }
-  if (shipsTo) {
-    filters.shipsTo = shipsTo;
-  }
-  if (inStock !== undefined) {
-    filters.inStock = inStock === 'true';
-  }
-  if (paymentMethod) {
-    filters.paymentMethod = paymentMethod;
-  }
-  if (coin) {
-    filters.coin = coin;
-  }
-  if (verified !== undefined) {
-    filters.verified = verified === 'true';
-  }
-  if (vendorTrustLevel) {
-    filters.vendorTrustLevel = JSON.parse(vendorTrustLevel); // { $gte: min, $lte: max }
-  }
-
-  try {
-    const products = await Product.find(filters);
-
-    if (products.length === 0) {
-      return res.status(404).json({ message: 'No products found matching the filters.' });
-    }
-
-    res.json(products); // Return the filtered products
-  } catch (error) {
-    console.error('Error fetching products:', error);
-    res.status(500).json({ message: 'Error fetching products.' });
-  }
-});
 
 
 
