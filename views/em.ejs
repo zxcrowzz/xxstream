@@ -1332,10 +1332,7 @@ async function checkProductStock(productId, requestedQuantity) {
 // Function to fetch and render detailed product view
 document.getElementById("srchbtn").addEventListener('click', async () => {
   const searchTerm = document.getElementById("hello").value;
-  const allChecked = document.querySelector('input[name="all"]').checked;
-  const digitalChecked = document.querySelector('input[name="digital"]').checked;
-  const physicalChecked = document.querySelector('input[name="physical"]').checked;
-  const autoDispatchChecked = document.querySelector('input[name="autoDispatch"]').checked;
+
 
   const priceFrom = document.getElementById("priceFrom").value;
   const priceTo = document.getElementById("priceTo").value;
@@ -1359,10 +1356,6 @@ document.getElementById("srchbtn").addEventListener('click', async () => {
       body: JSON.stringify({
         searchTerm,
         filters: {
-          allChecked,
-          digitalChecked,
-          physicalChecked,
-          autoDispatchChecked,
           priceFrom,
           priceTo,
           category,
