@@ -1354,53 +1354,24 @@ document.getElementById('srchbtn').addEventListener('click', async () => {
     return;
   }
 
-  productContainer.innerHTML = ''; // Clear existing results
-  productContainer.style.display = 'block';
-
-  if (controller) {
-    controller.abort(); // Abort ongoing request
-  }
-
-  controller = new AbortController();
-  const signal = controller.signal;
+  // Clear existing results
+  productContainer.innerHTML = '';
 
   try {
-    const response = await fetch(`/products/search?term=${encodeURIComponent(searchTerm)}`, { signal });
-    if (!response.ok) {
-      console.error('Server responded with status:', response.status);
-      throw new Error('Failed to fetch search results');
-    }
+    const response = await fetch(`/products/search?term=${encodeURIComponent(searchTerm)}`);
+    if (!response.ok) throw new Error('Failed to fetch search results.');
 
-    const products = await response.json();
-
-    if (products.length === 0) {
+    const data = await response.json();
+    if (data.products.length === 0) {
       productContainer.innerHTML = '<p>No products found for this search term.</p>';
     } else {
-      products.forEach((product) => {
-        const productItem = document.createElement('div');
-        productItem.classList.add('product-item');
-        productItem.innerHTML = `
-          <div class="product" data-id="${product._id}">
-            <img src="${product.imageUrl}" alt="${product.name}" id="heyf">
-            <h4 id="eey3">${product.name}</h4>
-            <p id="desc">${product.description}</p>
-            <p id="price">Price: $${product.price}</p>
-            <p id="posted-by">Posted by: <strong>${product.userId?.name || 'Unknown User'}</strong></p>
-          </div>
-        `;
-        productItem.addEventListener('click', () => renderDetailedProduct(product));
-        productContainer.appendChild(productItem);
-      });
+       renderDetailedProduct(data.products); // Call your render function here
     }
   } catch (error) {
-    if (error.name === 'AbortError') {
-      console.log('Search request was aborted');
-    } else {
-      console.error('Error fetching search results:', error);
-    }
+    console.error('Error fetching search results:', error);
+    productContainer.innerHTML = '<p>Unable to fetch search results. Please try again later.</p>';
   }
 });
-
 
 
 
