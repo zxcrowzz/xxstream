@@ -826,7 +826,21 @@ app.post('/order/create', async (req, res) => {
 
 
 
+app.get('/products/search', async (req, res) => {
+  const searchTerm = req.query.term;
+  console.log('Received searchTerm:', searchTerm); // Log the search term
 
+  try {
+    const products = await Product.find({ 
+      name: { $regex: searchTerm, $options: 'i' } 
+    });
+    console.log('Found products:', products); // Log the result
+    res.json(products);
+  } catch (error) {
+    console.error('Error during search:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 
 
@@ -906,21 +920,7 @@ res.render('tos');
 
 });
 
-app.get('/products/search', async (req, res) => {
-  const searchTerm = req.query.term;
-  console.log('Received searchTerm:', searchTerm); // Log the search term
 
-  try {
-    const products = await Product.find({ 
-      name: { $regex: searchTerm, $options: 'i' } 
-    });
-    console.log('Found products:', products); // Log the result
-    res.json(products);
-  } catch (error) {
-    console.error('Error during search:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
 
 
 
