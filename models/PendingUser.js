@@ -4,11 +4,13 @@ const pendingUserSchema = new mongoose.Schema({
     username: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    confirmationCode: { type: String, required: true, index: true }, // Confirmation code instead of token
-    createdAt: { type: Date, default: Date.now, expires: 3600 } // Expires in 1 hour
+    confirmationCode: { type: String, required: true, index: true }, // Confirmation code for email verification
+    createdAt: { type: Date, default: Date.now, expires: 3600 }, // Document expires in 1 hour
+    tosAcceptedAt: { type: Date, required: true }, // Timestamp of TOS agreement
+    tosVersion: { type: String, default: '1.0' }, // TOS version agreed to
 });
 
-// Optionally, you can explicitly create an index for confirmationCode:
-pendingUserSchema.index({ confirmationCode: 1 }); // This creates an index on the confirmationCode field
+// Explicitly creating an index for confirmationCode (redundant here since `index: true` is already defined)
+pendingUserSchema.index({ confirmationCode: 1 });
 
 module.exports = mongoose.model('PendingUser', pendingUserSchema);
