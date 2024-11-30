@@ -672,9 +672,8 @@ app.post('/products/search', async (req, res) => {
     }
     
     // Apply filters (example)
-    if (filters.allChecked) query.category = { $in: ['Digital', 'Physical', 'Auto Dispatch'] };
-    if (filters.digitalChecked) query.category = 'Digital';
-    if (filters.physicalChecked) query.category = 'Physical';
+   
+ 
     if (filters.priceFrom && filters.priceTo) {
       query.price = { $gte: parseInt(filters.priceFrom), $lte: parseInt(filters.priceTo) };
     }
