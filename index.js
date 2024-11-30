@@ -246,17 +246,20 @@ app.post('/verify-email', [
       }
 
       // Create new user from the pending user
-      const newUser = new User({
-          name: pendingUser.username,
-          email: pendingUser.email,
-          password: pendingUser.password,
-          isVerified: true
-      });
+     const newUser = new User({
+    name: pendingUser.username,
+    email: pendingUser.email,
+    password: pendingUser.password,
+    isVerified: true,
+    tosAcceptedAt: pendingUser.tosAcceptedAt,  // Transfer the TOS acceptance timestamp
+    tosVersion: pendingUser.tosVersion         // Transfer the TOS version
+});
 
-      await newUser.save();
-      await PendingUser.deleteOne({ email: pendingUser.email });
+await newUser.save();
+await PendingUser.deleteOne({ email: pendingUser.email });
 
-      res.send('Email confirmed. You can now log in.');
+res.send('Email confirmed. You can now log in.');
+
   } catch (e) {
       console.log(e);
       res.status(500).send('Server error');
