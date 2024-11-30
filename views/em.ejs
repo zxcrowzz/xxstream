@@ -1376,20 +1376,17 @@ document.getElementById('srchbtn').addEventListener('click', async () => {
   const priceFrom = document.getElementById('priceFrom').value;
   const priceTo = document.getElementById('priceTo').value;
 
-  // Create the search query object
   const searchQuery = {
     searchTerm: searchInput,
     categories: checkboxes,
     priceRange: { from: priceFrom, to: priceTo },
-    // Add more filters as needed
   };
 
   try {
-    // Send the search request to the server
     const response = await fetch('/search', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(searchQuery)
+      body: JSON.stringify(searchQuery),
     });
 
     if (!response.ok) {
@@ -1397,9 +1394,7 @@ document.getElementById('srchbtn').addEventListener('click', async () => {
     }
 
     const products = await response.json();
-
-    // Render the search results
-    renderSearchResults(products);
+    renderSearchResults(products); // Updated to handle a single product directly
   } catch (error) {
     console.error('Error during search:', error);
     alert('Failed to perform search. Please try again.');
@@ -1416,6 +1411,13 @@ function renderSearchResults(products) {
     return;
   }
 
+  // If there's exactly one product, render it directly
+  if (products.length === 1) {
+    renderDetailedProduct(products[0]);
+    return;
+  }
+
+  // Otherwise, display the list of products
   products.forEach(product => {
     const productCard = document.createElement('div');
     productCard.classList.add('product-card');
@@ -1440,6 +1442,7 @@ function renderSearchResults(products) {
     });
   });
 }
+
 
 // Function to fetch and render detailed product view
 async function fetchProductDetails(productId) {
