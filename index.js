@@ -906,34 +906,12 @@ res.render('tos');
 
 });
 
-app.post('/search', async (req, res) => {
-  const { searchTerm, categories, priceRange } = req.body;
-
-  try {
-    const query = {};
-
-    // Add search term to query
-    if (searchTerm) {
-      query.name = { $regex: searchTerm, $options: 'i' }; // Case-insensitive search
-    }
-
-    // Add categories to query
-    if (categories && categories.length > 0) {
-      query.category = { $in: categories };
-    }
-
-    // Add price range to query
-    if (priceRange) {
-      query.price = { $gte: parseFloat(priceRange.from), $lte: parseFloat(priceRange.to) };
-    }
-
-    // Fetch matching products from the database
-    const products = await Product.find(query);
-    res.json(products);
-  } catch (error) {
-    console.error('Error during search:', error);
-    res.status(500).json({ error: 'Failed to perform search' });
-  }
+app.get('/products/search', async (req, res) => {
+  const searchTerm = req.query.term;
+  const products = await Product.find({ 
+    name: { $regex: searchTerm, $options: 'i' } 
+  });
+  res.json(products);
 });
 
 
