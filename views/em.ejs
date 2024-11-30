@@ -1349,6 +1349,62 @@ async function fetchProductDetails(productId) {
 
 
 
+// Function to handle search button click
+document.getElementById('srchbtn').addEventListener('click', async () => {
+  const productContainer = document.getElementById('product-container');
+  
+  // Collect filter values
+  const searchTerm = document.getElementById('hello').value;
+  const priceFrom = document.getElementById('priceFrom').value;
+  const priceTo = document.getElementById('priceTo').value;
+  const category = document.getElementById('priceTo1').value;
+  const originCountry = document.getElementById('priceTo2').value;
+  const shipsTo = document.getElementById('priceTo3').value;
+  const orderBy = document.getElementById('priceTo4').value;
+  const inStock = document.getElementById('priceTo5').value;
+  const paymentMethod = document.getElementById('priceTo6').value;
+  const coin = document.getElementById('priceTo7').value;
+  const verified = document.getElementById('priceTo8').value;
+  const vendorTrustLevelFrom = document.getElementById('priceFrom01').value;
+  const vendorTrustLevelTo = document.getElementById('priceTo01').value;
+  
+  // Show loading or hide previous results
+  productContainer.innerHTML = ''; // Clear previous results
+  productContainer.style.display = 'block'; // Show product container if hidden
+  
+  // Send the request with filters as query parameters
+  try {
+    const response = await fetch(`/search-products?searchTerm=${searchTerm}&priceFrom=${priceFrom}&priceTo=${priceTo}&category=${category}&originCountry=${originCountry}&shipsTo=${shipsTo}&orderBy=${orderBy}&inStock=${inStock}&paymentMethod=${paymentMethod}&coin=${coin}&verified=${verified}&vendorTrustLevelFrom=${vendorTrustLevelFrom}&vendorTrustLevelTo=${vendorTrustLevelTo}`);
+    if (!response.ok) throw new Error('Failed to fetch products');
+    
+    const products = await response.json();
+    
+    // Handle empty response
+    if (products.length === 0) {
+      productContainer.innerHTML = '<p>No products found matching the filters.</p>';
+    } else {
+      // Render the fetched products
+      products.forEach(product => {
+        const productItem = document.createElement('div');
+        productItem.classList.add('product-item');
+        productItem.innerHTML = `
+          <div class="product" data-id="${product._id}">
+            <img src="${product.imageUrl}" alt="${product.name}" id="heyf">
+            <h4 id="eey3">${product.name}</h4>
+            <p id="desc">${product.description}</p>
+            <p id="price">Price: $${product.price}</p>
+            <p id="posted-by">Posted by: <strong>${product.userId?.name || 'Unknown User'}</strong></p>
+          </div>
+        `;
+        productItem.addEventListener('click', () => renderDetailedProduct(product));
+        productContainer.appendChild(productItem);
+      });
+    }
+  } catch (error) {
+    console.error('Error loading products:', error);
+    productContainer.innerHTML = '<p>Error loading products. Please try again.</p>';
+  }
+});
 
 
 
