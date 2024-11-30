@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   profileImageUrl: { type: String },
   
   // TOS agreement details
-  tosAcceptedAt: { type: Date, required: true },  // Timestamp when user agreed to the TOS
+  tosAcceptedAt: { type: Date, required: false },  // Timestamp when user agreed to the TOS
   tosVersion: { type: String, default: '1.0' },    // Version of the TOS user accepted
 });
 
