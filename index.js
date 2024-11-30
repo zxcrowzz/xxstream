@@ -662,24 +662,6 @@ app.post('/submit-product', upload1.single('productImage'), async (req, res) => 
   }
 });
 
-app.get('/products/search', async (req, res) => {
-  const searchTerm = req.query.term;
-
-  try {
-    const products = await Product.find({
-      name: { $regex: new RegExp(searchTerm, 'i') } // Case-insensitive regex match
-    });
-
-    if (products.length === 0) {
-      return res.status(200).json({ message: 'No products found.', products: [] });
-    }
-
-    res.status(200).json({ products });
-  } catch (error) {
-    console.error('Error during search:', error);
-    res.status(500).json({ message: 'Server error occurred' });
-  }
-});
 app.get('/products/:category', async (req, res) => {
   const category = req.params.category;
   try {
