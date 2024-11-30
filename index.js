@@ -889,5 +889,9 @@ app.get('/user/:id', async (req, res) => {
         res.status(500).json({ error: 'An error occurred' });
     }
 });
+app.post('/TOS', async (req, res) => {
 
+res.render('tos');
+
+});
 module.exports = router;
