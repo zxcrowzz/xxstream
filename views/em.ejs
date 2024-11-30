@@ -1330,34 +1330,10 @@ async function checkProductStock(productId, requestedQuantity) {
 
 
 // Function to fetch and render detailed product view
-async function fetchProductDetails(productId) {
-  try {
-    const response = await fetch(`/product/${productId}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch product details');
-    }
-
-    const product = await response.json();
-    renderDetailedProduct(product);
-  } catch (error) {
-    console.error('Error fetching product details:', error);
-  }
-}
-
-
-
-
-
-
-// Function to handle search button click
-
 document.getElementById("srchbtn").addEventListener('click', async () => {
   const searchTerm = document.getElementById("hello").value;
 
-
-
-
-
+  // Get filter values
   const priceFrom = document.getElementById("priceFrom").value;
   const priceTo = document.getElementById("priceTo").value;
   const category = document.getElementById("priceTo1").value;
@@ -1415,7 +1391,8 @@ document.getElementById("srchbtn").addEventListener('click', async () => {
           </div>
         `;
 
-        productItem.addEventListener('click', () => renderDetailedProduct(product));
+        // Add click event to fetch product details for the clicked product
+        productItem.addEventListener('click', () => fetchProductDetails(product._id));
         productContainer.appendChild(productItem);
       });
     }
@@ -1423,6 +1400,21 @@ document.getElementById("srchbtn").addEventListener('click', async () => {
     console.error('Error loading products:', error);
   }
 });
+
+// Function to fetch product details when a product is clicked
+async function fetchProductDetails(productId) {
+  try {
+    const response = await fetch(`/product/${productId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch product details');
+    }
+
+    const product = await response.json();
+    renderDetailedProduct(product);  // Render detailed product
+  } catch (error) {
+    console.error('Error fetching product details:', error);
+  }
+}
 
 
 
