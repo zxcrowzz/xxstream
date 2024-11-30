@@ -191,14 +191,17 @@ app.post("/register", [
       // Generate a random 6-digit confirmation code
       const confirmationCode = crypto.randomInt(100000, 999999).toString();
 
-      const pendingUser = new PendingUser({
-          username: req.body.username,
-          email: req.body.email,
-          password: hashedPassword,
-          confirmationCode
-      });
+   const pendingUser = new PendingUser({
+    username: req.body.username,
+    email: req.body.email,
+    password: hashedPassword,
+    confirmationCode,
+    tosAcceptedAt: new Date(),  // Record the date/time when the user agrees to TOS
+    tosVersion: '1.0'           // Store the TOS version the user accepted
+});
 
-      await pendingUser.save();
+await pendingUser.save();
+
 
       await transporter.sendMail({
           to: pendingUser.email,
