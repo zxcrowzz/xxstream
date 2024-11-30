@@ -1354,20 +1354,22 @@ document.getElementById('srchbtn').addEventListener('click', async () => {
     return;
   }
 
-  // Clear existing results
-  productContainer.innerHTML = '';
+  productContainer.innerHTML = ''; // Clear existing results
   productContainer.style.display = 'block';
 
-  // Abort any ongoing requests
   if (controller) {
-    controller.abort();
+    controller.abort(); // Abort ongoing request
   }
+
   controller = new AbortController();
   const signal = controller.signal;
 
   try {
     const response = await fetch(`/products/search?term=${encodeURIComponent(searchTerm)}`, { signal });
-    if (!response.ok) throw new Error('Failed to fetch search results');
+    if (!response.ok) {
+      console.error('Server responded with status:', response.status);
+      throw new Error('Failed to fetch search results');
+    }
 
     const products = await response.json();
 
@@ -1377,7 +1379,7 @@ document.getElementById('srchbtn').addEventListener('click', async () => {
       products.forEach((product) => {
         const productItem = document.createElement('div');
         productItem.classList.add('product-item');
-        productItem.innerHTML = ` 
+        productItem.innerHTML = `
           <div class="product" data-id="${product._id}">
             <img src="${product.imageUrl}" alt="${product.name}" id="heyf">
             <h4 id="eey3">${product.name}</h4>
@@ -1386,8 +1388,6 @@ document.getElementById('srchbtn').addEventListener('click', async () => {
             <p id="posted-by">Posted by: <strong>${product.userId?.name || 'Unknown User'}</strong></p>
           </div>
         `;
-
-        // Use the same function to render detailed product
         productItem.addEventListener('click', () => renderDetailedProduct(product));
         productContainer.appendChild(productItem);
       });
@@ -1400,7 +1400,6 @@ document.getElementById('srchbtn').addEventListener('click', async () => {
     }
   }
 });
-
 
 
 
