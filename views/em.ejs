@@ -1359,7 +1359,7 @@ document.getElementById('srchbtn').addEventListener('click', async () => {
     const priceFrom = document.getElementById('priceFrom').value;
     const priceTo = document.getElementById('priceTo').value;
     const category = document.getElementById('cat').value;
-    const originCountry = document.getElementById('originCountry').value;
+    const originCountry = document.getElementById('origin').value;
 
     // Collect checked checkboxes for filters
     const categoryChecked = document.getElementById('checkboxCategory').checked;
@@ -1422,7 +1422,7 @@ document.getElementById('refrsh').addEventListener('click', () => {
     document.getElementById('cat').value = '';
     document.getElementById('priceFrom').value = '';
     document.getElementById('priceTo').value = '';
-    document.getElementById('originCountry').value = '';
+    document.getElementById('origin').value = '';
     document.getElementById('checkboxCategory').checked = false;
     document.getElementById('checkboxPrice').checked = false;
     document.getElementById('checkboxOriginCountry').checked = false;
