@@ -1327,121 +1327,6 @@ async function checkProductStock(productId, requestedQuantity) {
   }
 }
 
-document.getElementById('confirmSearch').addEventListener('click', async () => {
-    const query = document.getElementById('searching').value.trim();
-
-    // Ensure the query is not empty
-    if (!query) {
-        alert('Please enter a username to search!');
-        return;
-    }
-
-    // Make a search request to the backend
-    try {
-        const response = await fetch(`/search-users?q=${query}`);
-        if (!response.ok) throw new Error('Error fetching search results');
-        const results = await response.json();
-
-        const resultsContainer = document.getElementById('quicksearch1');
-        resultsContainer.innerHTML = '<h2 id="move2">QUICK SEARCH</h2>'; // Clear previous results but keep the title
-
-        if (results.length === 0) {
-            resultsContainer.innerHTML += '<p>No users found.</p>';
-            return;
-        }
-
-        // Add each user to the results container
-        results.forEach(user => {
-            const userDiv = document.createElement('div');
-            userDiv.style.cssText = 'display: flex; align-items: center; border: 1px solid #ccc; margin: 5px 0; padding: 10px; cursor: pointer;';
-            userDiv.innerHTML = `
-                <img src="${user.profileImage}" alt="${user.username}" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
-                <span style="font-size: 16px; font-weight: bold;">${user.username}</span>
-            `;
-            userDiv.addEventListener('click', () => {
-                window.location.href = `/profile/${user._id}`; // Redirect to user's profile page
-            });
-            resultsContainer.appendChild(userDiv);
-        });
-    } catch (err) {
-        console.error('Search error:', err);
-        alert('Failed to fetch search results. Please try again later.');
-    }
-});
-
-// Function to handle the search
-document.getElementById('srchbtn').addEventListener('click', async () => {
-  const searchInput = document.getElementById('hello').value.trim();
-  const checkboxes = Array.from(document.querySelectorAll('#divvy .checkbox:checked')).map(cb => cb.parentElement.textContent.trim());
-  const priceFrom = document.getElementById('priceFrom').value;
-  const priceTo = document.getElementById('priceTo').value;
-
-  const searchQuery = {
-    searchTerm: searchInput,
-    categories: checkboxes,
-    priceRange: { from: priceFrom, to: priceTo },
-  };
-
-  try {
-    const response = await fetch('/search', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(searchQuery),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch search results');
-    }
-
-    const products = await response.json();
-    renderSearchResults(products); // Updated to handle a single product directly
-  } catch (error) {
-    console.error('Error during search:', error);
-    alert('Failed to perform search. Please try again.');
-  }
-});
-
-// Function to render search results
-function renderSearchResults(products) {
-  const productContainer = document.getElementById('product-container');
-  productContainer.innerHTML = ''; // Clear any previous results
-
-  if (products.length === 0) {
-    productContainer.innerHTML = '<p>No products found matching your search criteria.</p>';
-    return;
-  }
-
-  // If there's exactly one product, render it directly
-  if (products.length === 1) {
-    renderDetailedProduct(products[0]);
-    return;
-  }
-
-  // Otherwise, display the list of products
-  products.forEach(product => {
-    const productCard = document.createElement('div');
-    productCard.classList.add('product-card');
-    productCard.innerHTML = `
-      <div class="product-header">
-        <img src="${product.imageUrl}" alt="${product.name}" class="product-image">
-        <div class="details">
-          <h2>${product.name}</h2>
-          <p>${product.quantity || '0'} items left | USD $${product.price}</p>
-          <button class="view-details" data-id="${product._id}">View Details</button>
-        </div>
-      </div>
-    `;
-    productContainer.appendChild(productCard);
-  });
-
-  // Add event listeners to "View Details" buttons
-  document.querySelectorAll('.view-details').forEach(button => {
-    button.addEventListener('click', () => {
-      const productId = button.getAttribute('data-id');
-      fetchProductDetails(productId);
-    });
-  });
-}
 
 
 // Function to fetch and render detailed product view
@@ -1458,6 +1343,72 @@ async function fetchProductDetails(productId) {
     console.error('Error fetching product details:', error);
   }
 }
+
+
+document.getElementById('srchbtn').addEventListener('click', async () => {
+  const searchTerm = document.getElementById('hello').value.trim();
+  const productContainer = document.getElementById('product-container');
+
+  if (!searchTerm) {
+    alert('Please enter a search term.');
+    return;
+  }
+
+  // Clear existing results
+  productContainer.innerHTML = '';
+  productContainer.style.display = 'block';
+
+  // Abort any ongoing requests
+  if (controller) {
+    controller.abort();
+  }
+  controller = new AbortController();
+  const signal = controller.signal;
+
+  try {
+    const response = await fetch(`/products/search?term=${encodeURIComponent(searchTerm)}`, { signal });
+    if (!response.ok) throw new Error('Failed to fetch search results');
+
+    const products = await response.json();
+
+    if (products.length === 0) {
+      productContainer.innerHTML = '<p>No products found for this search term.</p>';
+    } else {
+      products.forEach((product) => {
+        const productItem = document.createElement('div');
+        productItem.classList.add('product-item');
+        productItem.innerHTML = ` 
+          <div class="product" data-id="${product._id}">
+            <img src="${product.imageUrl}" alt="${product.name}" id="heyf">
+            <h4 id="eey3">${product.name}</h4>
+            <p id="desc">${product.description}</p>
+            <p id="price">Price: $${product.price}</p>
+            <p id="posted-by">Posted by: <strong>${product.userId?.name || 'Unknown User'}</strong></p>
+          </div>
+        `;
+
+        // Use the same function to render detailed product
+        productItem.addEventListener('click', () => renderDetailedProduct(product));
+        productContainer.appendChild(productItem);
+      });
+    }
+  } catch (error) {
+    if (error.name === 'AbortError') {
+      console.log('Search request was aborted');
+    } else {
+      console.error('Error fetching search results:', error);
+    }
+  }
+});
+
+
+
+
+
+
+
+
+
 
 </script>
 
