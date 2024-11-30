@@ -667,26 +667,29 @@ app.post('/products/search', async (req, res) => {
   try {
     const query = {};
     
+    // Handle search term filtering by product name
     if (searchTerm) {
-      query.name = { $regex: searchTerm, $options: 'i' }; // Search by name
+      query.name = { $regex: searchTerm, $options: 'i' }; // Case-insensitive search by name
     }
     
-    // Apply filters (example)
-   
- 
+    // Apply filters (e.g., price range)
     if (filters.priceFrom && filters.priceTo) {
       query.price = { $gte: parseInt(filters.priceFrom), $lte: parseInt(filters.priceTo) };
     }
 
-    // Add other filters similarly...
+    // Add other filters similarly, e.g., category, country, etc.
 
-    const products = await Product.find(query); // Assuming you're using Mongoose
+    // Find products with the query and populate userId with 'name'
+    const products = await Product.find(query)
+      .populate('userId', 'name') // Populate the 'userId' field with the 'name' field from User collection
+      .exec(); // Ensure the query is executed
 
     res.json(products);
   } catch (error) {
     res.status(500).send('Error searching products');
   }
 });
+
 
 app.get('/products/:category', async (req, res) => {
   const category = req.params.category;
