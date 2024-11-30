@@ -894,4 +894,9 @@ app.post('/TOS', async (req, res) => {
 res.render('tos');
 
 });
+
+app.get('/tos', async (req, res) => {
+res.render('tos');
+
+});
 module.exports = router;
