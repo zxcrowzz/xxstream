@@ -661,6 +661,37 @@ app.post('/submit-product', upload1.single('productImage'), async (req, res) => 
     res.status(500).send({ message: 'Error saving product', error });
   }
 });
+app.get('/search-products', async (req, res) => {
+    const { searchTerm, priceFrom, priceTo, category, originCountry } = req.query;
+
+    // Create a query object that will hold the filters
+    let query = {};
+
+    // Apply filters to the query only if provided
+    if (searchTerm) {
+        query.name = new RegExp(searchTerm, 'i');  // Search by name (case-insensitive)
+    }
+    if (priceFrom) {
+        query.price = { $gte: parseFloat(priceFrom) };  // Price greater than or equal to 'priceFrom'
+    }
+    if (priceTo) {
+        query.price = { ...query.price, $lte: parseFloat(priceTo) };  // Price less than or equal to 'priceTo'
+    }
+    if (category) {
+        query.category = category;  // Filter by category
+    }
+    if (originCountry) {
+        query.originCountry = originCountry;  // Filter by country of origin
+    }
+
+    try {
+        const products = await Product.find(query);
+        res.json(products);
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        res.status(500).send('Error fetching products');
+    }
+});
 
 app.get('/products/:category', async (req, res) => {
   const category = req.params.category;
