@@ -1351,6 +1351,83 @@ async function fetchProductDetails(productId) {
 
 // Function to handle search button click
 
+document.getElementById('srchbtn').addEventListener('click', async () => {
+    const productContainer = document.getElementById('product-container');
+    
+    // Collect filter values
+    const searchTerm = document.getElementById('hello').value.trim();
+    const priceFrom = document.getElementById('priceFrom').value;
+    const priceTo = document.getElementById('priceTo').value;
+    const category = document.getElementById('category').value;
+    const originCountry = document.getElementById('originCountry').value;
+
+    // Collect checked checkboxes for filters
+    const categoryChecked = document.getElementById('checkboxCategory').checked;
+    const priceChecked = document.getElementById('checkboxPrice').checked;
+    const originCountryChecked = document.getElementById('checkboxOriginCountry').checked;
+
+    // Show loading or hide previous results
+    productContainer.innerHTML = ''; // Clear previous results
+    productContainer.style.display = 'block'; // Show product container if hidden
+    
+    // Build the query string based on the filters
+    let queryString = `/search-products?`;
+    
+    // Add filters to the query string only if they are checked and non-empty
+    if (searchTerm) queryString += `searchTerm=${encodeURIComponent(searchTerm)}&`;
+    if (categoryChecked && category) queryString += `category=${encodeURIComponent(category)}&`;
+    if (priceChecked && priceFrom) queryString += `priceFrom=${encodeURIComponent(priceFrom)}&`;
+    if (priceChecked && priceTo) queryString += `priceTo=${encodeURIComponent(priceTo)}&`;
+    if (originCountryChecked && originCountry) queryString += `originCountry=${encodeURIComponent(originCountry)}&`;
+    
+    // Trim the trailing '&' if present
+    queryString = queryString.slice(0, -1);
+
+    // Send the request with filters as query parameters
+    try {
+        const response = await fetch(queryString);
+        if (!response.ok) throw new Error('Failed to fetch products');
+        
+        const products = await response.json();
+        
+        // Handle empty response
+        if (products.length === 0) {
+            productContainer.innerHTML = '<p>No products found matching the filters.</p>';
+        } else {
+            // Render the fetched products
+            products.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.classList.add('product-item');
+                productItem.innerHTML = `
+                    <div class="product" data-id="${product._id}">
+                        <img src="${product.imageUrl}" alt="${product.name}">
+                        <h4>${product.name}</h4>
+                        <p>${product.description}</p>
+                        <p>Price: $${product.price}</p>
+                        <p>Posted by: <strong>${product.userId?.name || 'Unknown User'}</strong></p>
+                    </div>
+                `;
+                productContainer.appendChild(productItem);
+            });
+        }
+    } catch (error) {
+        console.error('Error loading products:', error);
+        productContainer.innerHTML = '<p>Error loading products. Please try again.</p>';
+    }
+});
+
+// Clear search input and filters
+document.getElementById('refrsh').addEventListener('click', () => {
+    document.getElementById('hello').value = '';
+    document.getElementById('category').value = '';
+    document.getElementById('priceFrom').value = '';
+    document.getElementById('priceTo').value = '';
+    document.getElementById('originCountry').value = '';
+    document.getElementById('checkboxCategory').checked = false;
+    document.getElementById('checkboxPrice').checked = false;
+    document.getElementById('checkboxOriginCountry').checked = false;
+    document.getElementById('product-container').innerHTML = ''; // Clear results
+});
 
 
 </script>
