@@ -828,19 +828,23 @@ app.post('/order/create', async (req, res) => {
 
 app.get('/products/search', async (req, res) => {
   const searchTerm = req.query.term;
-  console.log('Received searchTerm:', searchTerm); // Log the search term
 
   try {
     const products = await Product.find({ 
-      name: { $regex: searchTerm, $options: 'i' } 
+      name: { $regex: searchTerm, $options: 'i' } // Case-insensitive search
     });
-    console.log('Found products:', products); // Log the result
-    res.json(products);
+
+    if (products.length === 0) {
+      return res.status(200).json({ message: 'No products found.', products: [] });
+    }
+
+    res.status(200).json({ products });
   } catch (error) {
     console.error('Error during search:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ message: 'Server error occurred' });
   }
 });
+
 
 
 
