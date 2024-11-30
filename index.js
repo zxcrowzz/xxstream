@@ -715,6 +715,47 @@ res.render('productpage')
 
 });
 
+app.get('/search-products', async (req, res) => {
+  const {
+    searchTerm,
+    priceFrom,
+    priceTo,
+    category,
+    originCountry,
+    shipsTo,
+    orderBy,
+    inStock,
+    paymentMethod,
+    coin,
+    verified,
+    vendorTrustLevelFrom,
+    vendorTrustLevelTo
+  } = req.query;
+
+  const filter = {};
+
+  // Add filters based on provided search terms
+  if (searchTerm) filter.name = new RegExp(searchTerm, 'i'); // Case-insensitive search
+  if (priceFrom) filter.price = { $gte: parseFloat(priceFrom) };
+  if (priceTo) filter.price = { ...filter.price, $lte: parseFloat(priceTo) };
+  if (category && category !== 'NULL') filter.category = category;
+  if (originCountry && originCountry !== 'NULL') filter.originCountry = originCountry;
+  if (shipsTo && shipsTo !== 'NULL') filter.shipsTo = shipsTo;
+  if (verified !== undefined) filter.verified = verified === 'Yes';
+  if (inStock !== undefined) filter.inStock = inStock === 'Yes';
+  if (vendorTrustLevelFrom && vendorTrustLevelTo) {
+    filter.vendorTrustLevel = { $gte: parseInt(vendorTrustLevelFrom), $lte: parseInt(vendorTrustLevelTo) };
+  }
+
+  // Fetch products based on the filters
+  try {
+    const products = await Product.find(filter);
+    res.json(products);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).json({ message: 'Error fetching products' });
+  }
+});
 
 
 // Assuming you're using the same route file
