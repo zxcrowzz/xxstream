@@ -3206,16 +3206,7 @@ left: 23%;
 
 width: 79%
 }
-#featured {
-    width: 70%;
-    height: auto;
-    margin: auto;
-    position: relative;
-    border: 1px solid rgb(199, 195, 195);
-    padding: 20px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+
 
 #quicksearch2 {
     display: grid; /* Use CSS Grid */
