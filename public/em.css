@@ -3218,60 +3218,22 @@ width: 79%
 }
 
 #quicksearch2 {
+    display: grid; /* Use CSS Grid */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid layout */
+    gap: 20px; /* Space between grid items */
     border: 1px solid rgb(199, 195, 195);
     width: 98%;
     margin: auto;
-    height: auto;
-    background-color: rgb(228, 228, 228);
     padding: 15px;
-    position: relative;
+    background-color: rgb(228, 228, 228);
 }
 
-#move3 {
-    text-align: center;
-    font-size: 20px;
-    margin-bottom: 20px;
-    font-weight: bold;
-}
-
-.flex-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
-
-.listing {
-    flex: 0 1 calc(25% - 20px); /* Adjust to fit 4 items per row */
-    box-sizing: border-box;
+#quicksearch2 > div {
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #fff;
     padding: 10px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.listing img {
-    width: 100%;
-    height: auto;
-    max-height: 150px;
-    object-fit: cover;
-    margin-bottom: 10px;
-    border-radius: 8px;
-}
-
-.looneyHeader {
-    font-size: 16px;
-    color: darkorange;
-    font-weight: bold;
-    margin-bottom: 8px;
-}
-
-.itemnumber,
-.buyz {
-    font-size: 14px;
-    margin: 5px 0;
-    color: #555;
 }
 
