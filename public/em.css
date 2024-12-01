@@ -3206,5 +3206,38 @@ left: 23%;
 
 width: 79%
 }
+#quicksearch2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px; /* Space between items */
+  padding: 20px;
+}
 
+#acidListing, #FakeIdListing, #BlackTar, #AdderalListing,
+#ShroomsListing, #MethListing, #CocaineListing, #mdmaListing,
+#WeedListing, #sCB, #oil, #dmt {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+#looney {
+  width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.looneyHeader {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.itemnumber, .buyz {
+  font-size: 14px;
+  margin: 5px 0;
+}
 
