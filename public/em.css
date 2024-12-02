@@ -3243,6 +3243,7 @@ width: 29px;
 position: absolute;
 color: orange;
 left: 9.5%
+    top: -10%;
 
 }
 
@@ -3251,6 +3252,6 @@ position: absolute;
 
     left: .25%;
 
-    top: 50%;
+   
 
 }
