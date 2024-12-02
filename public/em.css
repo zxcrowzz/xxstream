@@ -3221,7 +3221,11 @@ width: 79%
 #img124 {
 position: absolute;
 
-    left: 20%
+    left: 12%;
+
+    width: 45px;
+
+    height: 45px;
 
 }
 
@@ -3229,14 +3233,16 @@ position: absolute;
 #img12 {
 position: absolute;
 
-    left: 10%
+    left: 5%;
+width: 45px;
 
+    height: 45px;
 }
 
 
 #img123 {
 position: absolute;
 
-    left: 3%
+    left: 1%;
 
 }
