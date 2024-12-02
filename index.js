@@ -43,6 +43,12 @@ app.set('view engine', 'ejs');
 const upload1 = multer({ storage: multer.memoryStorage() });
 
 
+app.use((req, res, next) => {
+  if (req.headers.host === 'expresssmarketplace.com') {
+    return res.redirect(301, `https://www.expresssmarketplace.com${req.url}`);
+  }
+  next();
+});
 
 
 
