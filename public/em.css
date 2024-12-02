@@ -3238,7 +3238,13 @@ width: 29px;
 
     height: 39.5px;
 }
+#loginheader1 {
 
+position: absolute;
+color: orange;
+left: 9.5%
+
+}
 
 #img123 {
 position: absolute;
